@@ -9,74 +9,62 @@ template<typename T>T AskAndGetInput(string questionHeader)
 	cin >> userInp;
 	return userInp;
 }
-template<>string AskAndGetInput(string questionHeader)
+template<> string AskAndGetInput(string questionHeader)
 {
 	string userInp;
 	cout << questionHeader << endl;
 	getline(cin,userInp);
 	return userInp;
 }
-enum AppMenuType
+
+void BuilApplicationHeader(string headerName)
 {
-	MainMenu = 0, SubMenu = 1, SubMenuChild = 2
-};
-void BuilApplicationHeader(string headerName, AppMenuType menuType)
-{
-	int headerWidth = 0;
+	//<Header Automatic Centerlized>
+	int HeaderLength = 0;
 	char ToPrint = '_';
-	switch (menuType)
+	for (int i = 0; i < 10; i++)
 	{
-		case AppMenuType::MainMenu: 
-		{
-			headerWidth = (50);
-			break;
-		}
-		case AppMenuType::SubMenu:
-		{
-			headerWidth = 25;
-			break;
-		}
-		case AppMenuType::SubMenuChild:
-		{
-			headerWidth = 20;
-			break;
-		}
-	 default:
-		throw runtime_error("ERROR In Building Application Header Failed");
-		break;
+		headerName.insert(0, 1, ' ');/// parmaters = (startingPoint, charToInsertLength, charToInsert)
 	}
+	for (int i = 0; i < 10; i++)
+	{
+		headerName.insert(headerName.length(), 1, ' ');/// parmaters = (startingPoint, charToInsertLength, charToInsert)
+	}
+
+	int headerWidth = headerName.length();
 	for (int i = 0; i < headerWidth; i++)
 	{
 		cout << ToPrint;
 	}
-	cout << "\n";
-	cout << "\n";
-	switch (menuType)
-	{
-		case AppMenuType::MainMenu:
-		{			
-			cout << "\t\t\t";
-			break;
-		}
-		case AppMenuType::SubMenu:
-		{			
-			cout << "\t";
-			break;
-		}
-		case AppMenuType::SubMenuChild:
-		{			
-			cout << "   ";
-			break;
-		}	
-		default:
-			throw runtime_error("ERROR In Building Application Header Failed");
-		break;
-	}
+	cout << "\n\n";	
 	cout << headerName;
 	cout << "\n";
 	for (int i = 0; i < headerWidth; i++)
 	{
 		cout << ToPrint;
 	}
+	cout << "\n\n";
 }
+bool AskToGoBack()
+{
+	auto SelectedChoice = AskAndGetInput<char>("DO YOU WANT TO GO BACK? (Y,N)");
+	if (SelectedChoice =='Y'|| SelectedChoice == 'y')
+	{
+		return true;
+	}
+	return false;
+}
+bool AskToExitApplication()
+{
+	auto SelectedChoice = AskAndGetInput<char>("DO YOU WANT TO Exit Application? (Y,N)");
+	if (SelectedChoice == 'Y' || SelectedChoice == 'y')
+	{
+		return true;
+	}
+	return false;
+}
+void ChangeApplicationColor() 
+{
 
+}
+void StartUp();
