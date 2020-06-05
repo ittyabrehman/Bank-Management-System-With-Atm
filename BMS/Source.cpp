@@ -49,7 +49,11 @@ public:
 	{
 		return Name;
 	}
-	virtual void Dispalay() = 0;
+	virtual void Display() = 0;
+	Person()
+	{
+		Name = FatherName = ContactNumber = Address = CNIC="";
+	}
 };
 
 class User : public Person 
@@ -82,7 +86,7 @@ public:
 	{
 		return UserName;
 	}
-	virtual void Dispalay() override 
+	virtual void Display() override
 	{
 		
 	}
@@ -94,6 +98,10 @@ public:
 	{
 
 	}
+	User()
+	{
+		UserName = Password = Email = "";
+	}
 	
 };
 
@@ -102,13 +110,13 @@ class Customer : public Person
 	string BusinessName;
 	double MonthlyIncome;
 	double yearlyIncome;
-	int DateOfBussinessEstablishing;
+	string DateOfBussinessEstablishing;
 public:
-	void set_DateOfBussinessEstablishing(int DateOfBussinessEstablishing_inp)
+	void set_DateOfBussinessEstablishing(string DateOfBussinessEstablishing_inp)
 	{
 		DateOfBussinessEstablishing = DateOfBussinessEstablishing_inp;
 	}
-	int get_DateOfBussinessEstablishing() const
+	string get_DateOfBussinessEstablishing() const
 	{
 		return DateOfBussinessEstablishing;
 	}
@@ -135,6 +143,11 @@ public:
 	string get_BusinessName() const
 	{
 		return BusinessName;
+	}
+	Customer()
+	{
+		BusinessName = DateOfBussinessEstablishing = "";
+		MonthlyIncome = yearlyIncome = 0;
 	}
 
 };
@@ -196,11 +209,153 @@ public:
 	{
 		return AccountTitle;
 	}
-	virtual void Dispalay() override
+	virtual void Display() override
 	{		
 
 	}
+	void CreateNewBankAccount()
+	{
+		string ModelString = get_Name() + "," + get_FatherName() + "," + get_ContactNumber() +
+			"," + get_CNIC() + "," + get_Address() + "," + get_AccountNumber() + "," +
+			get_AccountTitle() + "," + get_AtmCardNumber() + "," + get_DateofRegistration() + "," +
+			get_DebitCardNumber() + "," + get_BusinessName() + "," + to_string(get_MonthlyIncome()) + "," +
+			to_string(get_yearlyIncome()) + "," + get_DateOfBussinessEstablishing() + "," + get_Status()+",";
+		if (SaveToFile("Data\\account.dat", ModelString)) 
+		{
+			cout<< "Saved SuccessFully" << endl;
+		}
+		else 
+		{
+			cout << "Saving Failed" << endl;
+		}
+	}
 
+	void ReadBankAccountData() 
+	{
+		ifstream reader;
+		reader.open("Data\\account.dat");
+		if (reader.is_open())
+		{
+			string Data, MyAttribute;
+			int Attribute = 0,index=0;
+			while (getline(reader,Data))
+			{
+				for (int i = 0; i < Data.length(); i++)
+				{
+					if (Data[i] != ',')
+					{
+						MyAttribute.insert(index, 1, Data[i]);
+						index++;
+						if (Data[i] == '$')
+						{
+							Display();
+						}																
+					}
+					else
+					{
+						Attribute++;
+						if (Attribute == 1)
+						{
+							set_Name(MyAttribute);
+							MyAttribute.clear();
+							index = 0;
+						}
+						if (Attribute == 2)
+						{
+							set_FatherName(MyAttribute);
+							MyAttribute.clear();
+							index = 0;
+						}
+						if (Attribute == 3)
+						{
+							set_ContactNumber(MyAttribute);
+							MyAttribute.clear();
+							index = 0;
+						}
+						if (Attribute == 4)
+						{
+							set_CNIC(MyAttribute);
+							MyAttribute.clear();
+							index = 0;
+						}
+						if (Attribute == 5)
+						{
+							set_Address(MyAttribute);
+							MyAttribute.clear();
+							index = 0;
+						}
+						if (Attribute == 6)
+						{
+							set_AccountNumber(MyAttribute);
+							MyAttribute.clear();
+							index = 0;
+						}
+						if (Attribute == 7)
+						{
+							set_AccountTitle(MyAttribute);
+							MyAttribute.clear();
+							index = 0;
+						}
+						if (Attribute == 8)
+						{
+							set_AtmCardNumber(MyAttribute);
+							MyAttribute.clear();
+							index = 0;
+						}
+						if (Attribute == 9)
+						{
+							set_DateofRegistration(MyAttribute);
+							MyAttribute.clear();
+							index = 0;
+						}
+						if (Attribute == 10)
+						{
+							set_DebitCardNumber(MyAttribute);
+							MyAttribute.clear();
+							index = 0;
+						}
+						if (Attribute == 11)
+						{
+							set_BusinessName(MyAttribute);
+							MyAttribute.clear();
+							index = 0;
+						}
+						if (Attribute == 12)
+						{
+							set_MonthlyIncome(stod(MyAttribute));
+							MyAttribute.clear();
+							index = 0;
+						}
+						if (Attribute == 13)
+						{
+							set_yearlyIncome(stod(MyAttribute));
+							MyAttribute.clear();
+							index = 0;
+						}
+						if (Attribute == 14)
+						{
+							set_DateOfBussinessEstablishing((MyAttribute));
+							MyAttribute.clear();
+							index = 0;
+						}
+						if (Attribute == 15)
+						{
+							set_Status((MyAttribute));
+							MyAttribute.clear();
+							index = 0;
+						}
+						
+					}										
+				}				
+				
+			}
+		}
+	}
+
+	Accounts()
+	{
+		AccountTitle = AccountNumber = DebitCardNumber = AtmCardNumber = Status = DateofRegistration = "";
+	}
 };
 
 class Transactions :public Accounts
@@ -242,13 +397,18 @@ public:
 	{
 		return TransactionType;
 	}
-	virtual void Dispalay() override
+	virtual void Display() override
 	{
 
 	}
 	void write()
 	{
 
+	}
+	Transactions()
+	{
+		TransactionType = TransactionDate = "";
+		Amount = Balance = 0;
 	}
 };
 
@@ -266,10 +426,11 @@ void RegisterNewBankAccount()
 	acount.set_AtmCardNumber(AskAndGetInput<string>("Enter Your Atm Card Number"));
 	acount.set_DateofRegistration(AskAndGetInput<string>("Enter Your Date of Registration"));
 	acount.set_DebitCardNumber(AskAndGetInput<string>("Enter Your Debit Card Number"));
-	acount.set_Status(AskAndGetInput<string>("Enter Your Status"));
 	acount.set_BusinessName(AskAndGetInput<string>("Enter Your Bussiness Name"));
 	acount.set_MonthlyIncome(AskAndGetInput<double>("Enter Your Monthly Income"));
 	acount.set_yearlyIncome(AskAndGetInput<double>("Enter Your Yearly Income"));
+	acount.set_Status("A");
+	acount.CreateNewBankAccount();	
 }
 void DeleteBankAccount() 
 {

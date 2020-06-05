@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 template<typename T>T AskAndGetInput(string questionHeader)
 {	
@@ -63,8 +64,19 @@ bool AskToExitApplication()
 	}
 	return false;
 }
-void ChangeApplicationColor() 
+bool SaveToFile(string FileName,string DataString) 
 {
-
+	ofstream writer;
+	writer.open(FileName, ios::app);
+	if (writer.is_open()) 
+	{
+		writer << DataString << "$"<<endl;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	writer.close();
 }
 void StartUp();
