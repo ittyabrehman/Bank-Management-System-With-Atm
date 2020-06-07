@@ -211,7 +211,7 @@ public:
 	}
 	virtual void Display() override
 	{		
-
+		cout << get_Name() << " details" << endl;
 	}
 	void CreateNewBankAccount()
 	{
@@ -240,112 +240,122 @@ public:
 			int Attribute = 0,index=0;
 			while (getline(reader,Data))
 			{
+				Accounts CurrentAccountLoaded;
 				for (int i = 0; i < Data.length(); i++)
 				{
 					if (Data[i] != ',')
 					{
 						MyAttribute.insert(index, 1, Data[i]);
 						index++;
-						if (Data[i] == '$')
-						{
-							Display();
-						}																
+																					
 					}
 					else
 					{
 						Attribute++;
+						
 						if (Attribute == 1)
 						{
-							set_Name(MyAttribute);
+							CurrentAccountLoaded.set_Name(MyAttribute);
 							MyAttribute.clear();
 							index = 0;
 						}
 						if (Attribute == 2)
 						{
-							set_FatherName(MyAttribute);
+							CurrentAccountLoaded.set_FatherName(MyAttribute);
 							MyAttribute.clear();
 							index = 0;
 						}
 						if (Attribute == 3)
 						{
-							set_ContactNumber(MyAttribute);
+							CurrentAccountLoaded.set_ContactNumber(MyAttribute);
 							MyAttribute.clear();
 							index = 0;
 						}
 						if (Attribute == 4)
 						{
-							set_CNIC(MyAttribute);
+							CurrentAccountLoaded.set_CNIC(MyAttribute);
 							MyAttribute.clear();
 							index = 0;
 						}
 						if (Attribute == 5)
 						{
-							set_Address(MyAttribute);
+							CurrentAccountLoaded.set_Address(MyAttribute);
 							MyAttribute.clear();
 							index = 0;
 						}
 						if (Attribute == 6)
 						{
-							set_AccountNumber(MyAttribute);
+							CurrentAccountLoaded.set_AccountNumber(MyAttribute);
 							MyAttribute.clear();
 							index = 0;
 						}
 						if (Attribute == 7)
 						{
-							set_AccountTitle(MyAttribute);
+							CurrentAccountLoaded.set_AccountTitle(MyAttribute);
 							MyAttribute.clear();
 							index = 0;
 						}
 						if (Attribute == 8)
 						{
-							set_AtmCardNumber(MyAttribute);
+							CurrentAccountLoaded.set_AtmCardNumber(MyAttribute);
 							MyAttribute.clear();
 							index = 0;
 						}
 						if (Attribute == 9)
 						{
-							set_DateofRegistration(MyAttribute);
+							CurrentAccountLoaded.set_DateofRegistration(MyAttribute);
 							MyAttribute.clear();
 							index = 0;
 						}
 						if (Attribute == 10)
 						{
-							set_DebitCardNumber(MyAttribute);
+							CurrentAccountLoaded.set_DebitCardNumber(MyAttribute);
 							MyAttribute.clear();
 							index = 0;
 						}
 						if (Attribute == 11)
 						{
-							set_BusinessName(MyAttribute);
+							CurrentAccountLoaded.set_BusinessName(MyAttribute);
 							MyAttribute.clear();
 							index = 0;
 						}
 						if (Attribute == 12)
 						{
-							set_MonthlyIncome(stod(MyAttribute));
+							CurrentAccountLoaded.set_MonthlyIncome(stod(MyAttribute));
 							MyAttribute.clear();
 							index = 0;
 						}
 						if (Attribute == 13)
 						{
-							set_yearlyIncome(stod(MyAttribute));
+							CurrentAccountLoaded.set_yearlyIncome(stod(MyAttribute));
 							MyAttribute.clear();
 							index = 0;
 						}
 						if (Attribute == 14)
 						{
-							set_DateOfBussinessEstablishing((MyAttribute));
+							CurrentAccountLoaded.set_DateOfBussinessEstablishing((MyAttribute));
 							MyAttribute.clear();
 							index = 0;
 						}
 						if (Attribute == 15)
 						{
-							set_Status((MyAttribute));
+							CurrentAccountLoaded.set_Status((MyAttribute));
 							MyAttribute.clear();
 							index = 0;
 						}
 						
-					}										
+					}	
+					if (Data[i] == '$')///object completed
+					{
+						//this delete first char in 					
+						if (CurrentAccountLoaded.get_Name()[0]=='$')
+						{							
+							CurrentAccountLoaded.set_Name(CurrentAccountLoaded.get_Name().erase(0, 1));
+						}
+						CurrentAccountLoaded.Display();
+						Data.clear();
+						Attribute = 0;
+					}
 				}				
 				
 			}
@@ -438,7 +448,8 @@ void DeleteBankAccount()
 }
 void FindBankAccount() 
 {
-
+	Accounts ac;
+	ac.ReadBankAccountData();
 }
 void UpdateBankAccount() 
 {
