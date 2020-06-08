@@ -1,5 +1,6 @@
 ///ALL FILES REFERENCES
 #pragma once
+enum TransactionType { WithDraw = 0, Deposit = 1 };
 #include "Shared.h"
 #include "ApplicationMenus.h"
 #include "Person.h"

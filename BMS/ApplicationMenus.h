@@ -4,11 +4,20 @@ int ShowMainMenu()
 {
 	system("cls");
 	cout << "\t ****BANK MANAGEMENT SYSTEM ****" << endl;
-	BuilApplicationHeader("MAIN MODULE");
-	cout << "1.NEW BANK ACCOUNT" << endl;
+	BuilApplicationHeader("MAIN MODULES");
+	cout << "1.ACCOUNT MODULE" << endl;
+	cout << "2.TRANSACTIONS MODULE" << endl;
+	cout << "3.USER MODULE" << endl;
+	int key; cin >> key;
+	return key;
+}
+int ShowTranscationsModule() 
+{
+	system("cls");
+	BuilApplicationHeader("ACCOUNT MANAGEMENT MODULE");
+	cout << "1.WITH-DRAW AMOUNT" << endl;
 	cout << "2.DEPOSIT AMOUNT" << endl;
-	cout << "3.TRANSACTION HISTORY" << endl;
-	cout << "4.USER MANAGEMENT" << endl;
+	cout << "3.TRANSACTIONS HISTORY" << endl;	
 	int key; cin >> key;
 	return key;
 }

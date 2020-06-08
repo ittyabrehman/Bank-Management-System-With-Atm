@@ -1,5 +1,7 @@
 #include "Abstracts.h"
-
+//-----------------------------
+//ACCOUNT MODULE
+//-----------------------------
 void RegisterNewBankAccount() 
 {
 	Accounts acount;
@@ -19,6 +21,24 @@ void RegisterNewBankAccount()
 	acount.set_yearlyIncome(AskAndGetInput<double>("Enter Your Yearly Income"));
 	acount.set_Status("A");
 	acount.CreateNewBankAccount();
+	//intial transaction
+	cout << "\n" << endl;
+	cin.ignore();
+	Transactions trans;
+	trans.set_AccountNumber(acount.get_AccountNumber());
+	trans.set_TransactionId("01");
+	trans.set_TransactionType(TransactionType::Deposit);
+	auto transInp = AskAndGetInput<double>("Enter Transaction Amount");
+	while (!(transInp>1000))
+	{
+		transInp = AskAndGetInput<double>("Inital Amount Should be greater then 1,000. RE-Enter Transaction Amount");
+	}
+	trans.set_Amount(transInp);
+	trans.set_Balance(transInp);
+	cin.ignore();
+	trans.set_TransactionDate(AskAndGetInput<string>("Enter Transaction Date"));
+	trans.CreateNewTransction();
+
 }
 void DeleteBankAccount() 
 {
@@ -57,7 +77,62 @@ void UpdateBankAccount()
 	Accounts acnt;
 	acnt.UpdateBankAccount(ToFind, UpdatedRecord);
 }
-
+//-----------------------------
+//TRANSACTION MODULE
+//-----------------------------
+void WithDrawTransactionAmount() 
+{
+	cin.ignore();
+	string accountNumber = AskAndGetInput<string>("Enter Account Number To WithDraw");
+	Transactions checkBalance;
+	auto currentbalace = checkBalance.CheckCurrentBalance(accountNumber);
+	if (currentbalace > 1000)
+	{
+		Transactions trans;
+		trans.set_AccountNumber(accountNumber);
+		trans.set_TransactionId(AskAndGetInput<string>("Enter Transaction Id"));
+		trans.set_TransactionType(TransactionType::WithDraw);
+		trans.set_Amount(AskAndGetInput<double>("Enter Transaction Amount"));
+		double newbalance = currentbalace - (trans.get_Amount());
+		trans.set_Balance(newbalance);
+		cin.ignore();
+		trans.set_TransactionDate(AskAndGetInput<string>("Enter Transaction Date"));
+		trans.CreateNewTransction();
+	}
+	else 
+	{
+		cout << "Current Balance is Less Then 1,000" << endl;
+	}
+	
+}
+void DepositTransactionAmount() 
+{
+	cin.ignore();
+	string accountNumber = AskAndGetInput<string>("Enter Account Number To Deposit");
+	Transactions checkBalance;
+	auto currentbalace = checkBalance.CheckCurrentBalance(accountNumber);
+	
+	Transactions trans;
+	trans.set_AccountNumber(accountNumber);
+	trans.set_TransactionId(AskAndGetInput<string>("Enter Transaction Id"));
+	trans.set_TransactionType(TransactionType::Deposit);
+	trans.set_Amount(AskAndGetInput<double>("Enter Transaction Amount"));
+	double newbalance = currentbalace + (trans.get_Amount());
+	trans.set_Balance(newbalance);
+	cin.ignore();
+	trans.set_TransactionDate(AskAndGetInput<string>("Enter Transaction Date"));
+	trans.CreateNewTransction();
+}
+void TransactionHistory() 
+{
+	cin.ignore();
+	string accountNumber = AskAndGetInput<string>("Enter Account Number To Deposit");
+	Transactions tr;
+	tr.FindTransactionHistoryByAccountNumber(accountNumber);
+}
+//-----------------------------
+//CODE DRIVER
+//-----------------------------
 void StartMyApp() 
 {
 	bool SelectedCommand = true;
@@ -93,6 +168,7 @@ void StartMyApp()
 						}
 						default:
 							throw runtime_error("ERROR PLEASE SELECT FROM ABOVE LIST");
+							StartUp();
 							break;
 					}
 					SelectedCommand = AskToGoBack();
@@ -104,6 +180,35 @@ void StartMyApp()
 			}
 			case 2:
 			{
+				do
+				{
+					switch (ShowTranscationsModule())
+					{
+						case 1:
+						{
+							WithDrawTransactionAmount();
+							break;
+						}
+						case 2:
+						{
+							DepositTransactionAmount();
+							break;
+						}
+						case 3:
+						{
+							TransactionHistory();
+							break;
+						}					
+					default:
+						throw runtime_error("ERROR PLEASE SELECT FROM ABOVE LIST");
+						StartUp();
+						break;
+					}
+					SelectedCommand = AskToGoBack();
+				} while (!SelectedCommand);
+				{
+					StartUp();
+				}
 				break;
 			}
 			case 3:
@@ -129,6 +234,9 @@ void StartMyApp()
 		StartUp();
 	}
 }
+//-----------------------------
+//EXCEPTION REGISTRATION
+//-----------------------------
 void StartUp() 
 {
 	try
@@ -138,8 +246,12 @@ void StartUp()
 	catch (exception ex)
 	{
 		cout << ex.what() << endl;
+		StartUp();
 	}
 }
+//-----------------------------
+//APP ENTRY POINT
+//-----------------------------
 int main()
 {
 	StartUp();

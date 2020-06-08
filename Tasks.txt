@@ -6,18 +6,19 @@ ___________________________________________________
 |		  |						       |		   |
 |Task-No  |        Details		       |  Status   |
 |_________|____________________________|___________|         
-|Task-01: | Account-Created            |   Done    |
+|Task-01: | Account-Create             |   Done    |
 |Task-02: | Account-Find		       |   Done    |
 |Task-03: | Account-Delete		       |   Done    |
 |Task-04: | Account-Update		       |   Done    |
-|Task-05: | Transaction-WithDraw       |           |
-|Task-06: | Transaction-Deposit        |           |
-|Task-07: | Transaction-History        |           |
-|Task-08: | User-Create                |           |
-|Task-09: | User-Find                  |           |
-|Task-10: | User-Delete                |           |
-|Task-11: | User-Update				   |           |
-|Task-12: | Login-Screen			   |		   |
+|Task-05: | Transaction-Create         |   Done    |
+|Task-06: | Transaction-Find           |   Done    |
+|Task-07: | Transaction-Delete         |   Done    |
+|Task-08: | Transaction-Update         |   Done    |
+|Task-09: | User-Create                |           |
+|Task-10: | User-Find                  |           |
+|Task-11: | User-Delete                |           |
+|Task-12: | User-Update				   |           |
+|Task-13: | Login-Screen			   |		   |
 |_________|____________________________|___________|
 
 
