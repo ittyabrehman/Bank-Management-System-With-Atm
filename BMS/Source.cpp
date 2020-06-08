@@ -20,7 +20,6 @@ void RegisterNewBankAccount()
 	acount.set_Status("A");
 	acount.CreateNewBankAccount();
 }
-
 void DeleteBankAccount() 
 {
 	cin.ignore();
@@ -33,7 +32,6 @@ void FindBankAccount()
 	Accounts ac;
 	ac.FindBankAccount(AskAndGetInput<string>("Enter Account No To Find"));
 }
-
 void UpdateBankAccount() 
 {
 	cin.ignore();
@@ -59,6 +57,7 @@ void UpdateBankAccount()
 	Accounts acnt;
 	acnt.UpdateBankAccount(ToFind, UpdatedRecord);
 }
+
 void StartMyApp() 
 {
 	bool SelectedCommand = true;

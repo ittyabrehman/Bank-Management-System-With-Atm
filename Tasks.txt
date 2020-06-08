@@ -1,26 +1,41 @@
-======================
-TASK TO DO:
-======================
-________________________________________
-|Task-No  |  Details		 |Status   |
-|_________|__________________|_________|         
-|Task-01: | Account-Created  |	Done   |
-|Task-02: | Account-Find     |	Done   |
-|Task-03: | Account-Delete   |	Done   |
-|Task-04: | Account-Update   |	Done   |
-|         |					 |		   |
-|         |					 |		   |
-|         |					 |		   |
-|         |					 |		   |
-|         |					 |		   |
-|         |					 |		   |
-|         |					 |		   |
-|         |					 |		   |
-|         |					 |		   |
-|         |					 |		   |
-|         |					 |		   |
-|         |					 |		   |
-|_________|__________________|_________|
+
+=====================
+TASK FOR ---> BMS
+=====================
+___________________________________________________
+|		  |						       |		   |
+|Task-No  |        Details		       |  Status   |
+|_________|____________________________|___________|         
+|Task-01: | Account-Created            |   Done    |
+|Task-02: | Account-Find		       |   Done    |
+|Task-03: | Account-Delete		       |   Done    |
+|Task-04: | Account-Update		       |   Done    |
+|Task-05: | Transaction-WithDraw       |           |
+|Task-06: | Transaction-Deposit        |           |
+|Task-07: | Transaction-History        |           |
+|Task-08: | User-Create                |           |
+|Task-09: | User-Find                  |           |
+|Task-10: | User-Delete                |           |
+|Task-11: | User-Update				   |           |
+|Task-12: | Login-Screen			   |		   |
+|_________|____________________________|___________|
 
 
 
+
+==========================
+TASK FOR ---> BMS.ATM
+==========================
+____________________________________________________
+|		  |						       |		   |
+|Task-No  |        Details		       |  Status   |
+|_________|____________________________|___________| 
+|Task-01: |  Login-Screen			   |		   |
+|Task-02: |  WithDrawMenu			   |		   |
+|Task-03: |  Change-Pin				   |		   |
+|Task-04: |	 Transaction-History 	   |		   |
+|         |							   |		   |
+|         |							   |		   |
+|         |							   |		   |
+|         |                            |           |
+|_________|____________________________|___________|

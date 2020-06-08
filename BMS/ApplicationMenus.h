@@ -4,7 +4,7 @@ int ShowMainMenu()
 {
 	system("cls");
 	cout << "\t ****BANK MANAGEMENT SYSTEM ****" << endl;
-	BuilApplicationHeader("MAIN MENU");
+	BuilApplicationHeader("MAIN MODULE");
 	cout << "1.NEW BANK ACCOUNT" << endl;
 	cout << "2.DEPOSIT AMOUNT" << endl;
 	cout << "3.TRANSACTION HISTORY" << endl;
@@ -25,6 +25,7 @@ int ShowNewBankAccountMenu()
 }
 int ShowUserManagementMenu()
 {
+	BuilApplicationHeader("USER MANAGEMENT MODULE");
 	cout << "1.REGISTER NEW USER" << endl;
 	cout << "2.DELETE USER" << endl;
 	cout << "3.DEACTIVATE USER" << endl;
