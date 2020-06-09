@@ -186,3 +186,83 @@ Action Completed
 => SUCCESSFULL: 
 MESSAGE: LOADING MAIN MENU
 Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: ======Application Started======
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: ittyab IS REQUESTED TO LOGIN 
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: ittyab IS LOGIN SUCCESSFULLY
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: STARTUP TRIGGERED
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: LOADING MAIN MENU
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: MAIN MENU LOADED COMPLETELY
+Action Completed
+
+=> FAILED: 
+MESSAGE: Invalid Choice
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: STARTUP TRIGGERED
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: LOADING MAIN MENU
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: MAIN MENU LOADED COMPLETELY
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: ======Application Started======
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: ittyab IS REQUESTED TO LOGIN 
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: ittyab IS LOGIN SUCCESSFULLY
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: STARTUP TRIGGERED
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: LOADING MAIN MENU
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: MAIN MENU LOADED COMPLETELY
+Action Completed
+
+=> FAILED: 
+MESSAGE: Invalid Choice.PLEASE CHOOSE FROM ABOVE MAIN MENU
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: STARTUP TRIGGERED
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: LOADING MAIN MENU
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: MAIN MENU LOADED COMPLETELY
+Action Completed

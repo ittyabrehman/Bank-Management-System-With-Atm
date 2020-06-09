@@ -10,8 +10,8 @@ int ShowMainMenu()
 	cout << "2.TRANSACTIONS MODULE" << endl;
 	cout << "3.USER MODULE" << endl;
 	cout << "4.EXIT APPLICATION" << endl;
-	int key; cin >> key;
 	CreateLog(ELogType::SuccessFul, "MAIN MENU LOADED COMPLETELY");
+	int key; cin >> key;
 	return key;
 }
 int ShowTranscationsModule() 
@@ -22,8 +22,8 @@ int ShowTranscationsModule()
 	cout << "1.WITH-DRAW AMOUNT" << endl;
 	cout << "2.DEPOSIT AMOUNT" << endl;
 	cout << "3.TRANSACTIONS HISTORY" << endl;	
-	int key; cin >> key;
 	CreateLog(ELogType::SuccessFul, "TRANSACTION MODULE LOADED COMPLETELY");
+	int key; cin >> key;
 	return key;
 }
 int ShowNewBankAccountMenu()
@@ -37,8 +37,8 @@ int ShowNewBankAccountMenu()
 	cout << "4.UPDATE ACCOUNT" << endl;
 	cout << "5.RE-ACTIVE ACCOUNT" << endl;
 	cout << "6.DEACTIVE ACCOUNT" << endl;
-	int key; cin >> key;
 	CreateLog(ELogType::SuccessFul, "BANK ACCOUNT MENU LOADED COMPLETELY");
+	int key; cin >> key;
 	return key;
 }
 int ShowUserManagementMenu()

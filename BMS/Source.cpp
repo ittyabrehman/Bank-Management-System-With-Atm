@@ -398,8 +398,7 @@ void StartMyApp()
 			}
 			default:
 			{
-				throw runtime_error("Invalid Choice");
-				StartUp();
+				throw runtime_error("Invalid Choice.PLEASE CHOOSE FROM ABOVE MAIN MENU");				
 				break; 
 			}
 		}
