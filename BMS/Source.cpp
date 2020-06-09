@@ -63,8 +63,7 @@ void UpdateBankAccount()
 	UpdatedRecord.set_FatherName(AskAndGetInput<string>("Enter Your Father Name"));
 	UpdatedRecord.set_ContactNumber(AskAndGetInput<string>("Enter Your Contact Number"));
 	UpdatedRecord.set_CNIC(AskAndGetInput<string>("Enter Your CNIC"));
-	UpdatedRecord.set_Address(AskAndGetInput<string>("Enter Your Address"));
-	UpdatedRecord.set_AccountNumber(AskAndGetInput<string>("Enter Your Account Number"));
+	UpdatedRecord.set_Address(AskAndGetInput<string>("Enter Your Address"));	
 	UpdatedRecord.set_AccountTitle(AskAndGetInput<string>("Enter Your Account Title"));
 	UpdatedRecord.set_AtmCardNumber(AskAndGetInput<string>("Enter Your Atm Card Number"));
 	UpdatedRecord.set_DateofRegistration(AskAndGetInput<string>("Enter Your Date of Registration"));
