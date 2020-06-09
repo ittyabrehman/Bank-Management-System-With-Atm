@@ -166,3 +166,23 @@ Action Completed
 => SUCCESSFULL: 
 MESSAGE: ======Application Started======
 Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: ======Application Started======
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: ittyab IS REQUESTED TO LOGIN 
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: ittyab IS LOGIN SUCCESSFULLY
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: STARTUP TRIGGERED
+Action Completed
+
+=> SUCCESSFULL: 
+MESSAGE: LOADING MAIN MENU
+Action Completed

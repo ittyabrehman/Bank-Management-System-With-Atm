@@ -6,41 +6,41 @@
 void RegisterNewBankAccount() 
 {
 	
-	Accounts acount;
+	Accounts accounts;
 	cin.ignore();
-	acount.set_Name(AskAndGetInput<string>("Enter Your Name"));
-	acount.set_FatherName(AskAndGetInput<string>("Enter Your Father Name"));
-	acount.set_ContactNumber(AskAndGetInput<string>("Enter Your Contact Number"));
-	acount.set_CNIC(AskAndGetInput<string>("Enter Your CNIC"));
-	acount.set_Address(AskAndGetInput<string>("Enter Your Address"));
-	acount.set_AccountNumber(AskAndGetInput<string>("Enter Your Account Number"));
-	acount.set_AccountTitle(AskAndGetInput<string>("Enter Your Account Title"));
-	acount.set_AtmCardNumber(AskAndGetInput<string>("Enter Your Atm Card Number"));
-	acount.set_DebitCardNumber(AskAndGetInput<string>("Enter Your Debit Card Number"));
-	acount.set_DebitCardPin(AskAndGetInput<string>("Enter Your Debit Card Pin (4-Digits)"));
-	acount.set_BusinessName(AskAndGetInput<string>("Enter Your Bussiness Name"));
-	acount.set_MonthlyIncome(AskAndGetInput<double>("Enter Your Monthly Income"));
-	acount.set_yearlyIncome(AskAndGetInput<double>("Enter Your Yearly Income"));
-	acount.set_Status("A");
-	auto dateOfReg = AskAndGetInput<string>("Enter Your Date of Registration");
-	acount.set_DateofRegistration(dateOfReg);
-	acount.CreateNewBankAccount();
+	accounts.set_Name(AskAndGetInput<string>("Enter Your Name"));
+	accounts.set_FatherName(AskAndGetInput<string>("Enter Your Father Name"));
+	accounts.set_ContactNumber(AskAndGetInput<string>("Enter Your Contact Number"));
+	accounts.set_CNIC(AskAndGetInput<string>("Enter Your CNIC"));
+	accounts.set_Address(AskAndGetInput<string>("Enter Your Address"));
+	accounts.set_AccountNumber(AskAndGetInput<string>("Enter Your Account Number"));
+	accounts.set_AccountTitle(AskAndGetInput<string>("Enter Your Account Title"));
+	accounts.set_AtmCardNumber(AskAndGetInput<string>("Enter Your Atm Card Number"));
+	accounts.set_DebitCardNumber(AskAndGetInput<string>("Enter Your Debit Card Number"));
+	accounts.set_DebitCardPin(AskAndGetInput<string>("Enter Your Debit Card Pin (4-Digits)"));
+	accounts.set_BusinessName(AskAndGetInput<string>("Enter Your Business Name"));
+	accounts.set_MonthlyIncome(AskAndGetInput<double>("Enter Your Monthly Income"));
+	accounts.set_yearlyIncome(AskAndGetInput<double>("Enter Your Yearly Income"));
+	accounts.set_Status("A");
+	const auto date_of_reg = AskAndGetInput<string>("Enter Your Date of Registration");
+	accounts.set_DateofRegistration(date_of_reg);
+	accounts.CreateNewBankAccount();
 	//initial transaction
 	cout << "\n Enter Initial Transaction Details\n" << endl;
 	cin.ignore();
 	Transactions trans;
-	trans.set_AccountNumber(acount.get_AccountNumber());
+	trans.set_AccountNumber(accounts.get_AccountNumber());
 	trans.set_TransactionId("01");
 	trans.set_ETransactionType(ETransactionType::Deposit);
 	auto transInp = AskAndGetInput<double>("Enter Transaction Amount");
 	while (!(transInp>1000))
 	{
-		transInp = AskAndGetInput<double>("Inital Amount Should be greater then 1,000. RE-Enter Transaction Amount");
+		transInp = AskAndGetInput<double>("Initial Amount Should be greater then 1,000. RE-Enter Transaction Amount");
 	}
 	trans.set_Amount(transInp);
 	trans.set_Balance(transInp);
 	cin.ignore();
-	trans.set_TransactionDate(dateOfReg);
+	trans.set_TransactionDate(date_of_reg);
 	trans.CreateNewTransction();
 	
 
@@ -60,9 +60,9 @@ void FindBankAccount()
 void UpdateBankAccount() 
 {
 	cin.ignore();
-	auto ToFind = AskAndGetInput<string>("Enter Your Account No To Find");
+	const auto toFind = AskAndGetInput<string>("Enter Your Account No To Find");
 	Accounts UpdatedRecord;
-	UpdatedRecord.FindBankAccount(ToFind);
+	UpdatedRecord.FindBankAccount(toFind);
 	cout << "\n\nPlease Enter New Details For Your Account\n\n";
 	UpdatedRecord.set_Name(AskAndGetInput<string>("Enter Your Name"));
 	UpdatedRecord.set_FatherName(AskAndGetInput<string>("Enter Your Father Name"));
@@ -78,13 +78,13 @@ void UpdateBankAccount()
 	UpdatedRecord.set_yearlyIncome(AskAndGetInput<double>("Enter Your Yearly Income"));
 	UpdatedRecord.set_Status("Active");
 
-	Accounts acnt;
-	acnt.UpdateBankAccount(ToFind, UpdatedRecord);
+	Accounts accounts;
+	accounts.UpdateBankAccount(toFind, UpdatedRecord);
 }
-void ChangeAccountActitityStatus(EUserActivityType type) 
+void ChangeAccountActivityStatus(EUserActivityType type) 
 {
 	cin.ignore();
-	auto AccountToChangeStatus = AskAndGetInput<string>("Enter Account Number to Change Activity Status");
+	const auto AccountToChangeStatus = AskAndGetInput<string>("Enter Account Number to Change Activity Status");
 	Accounts account;
 	switch (type)
 	{
@@ -105,9 +105,9 @@ void ChangeAccountActitityStatus(EUserActivityType type)
 void WithDrawTransactionAmount() 
 {
 	cin.ignore();
-	string accountNumber = AskAndGetInput<string>("Enter Account Number To WithDraw");
+	const string accountNumber = AskAndGetInput<string>("Enter Account Number To WithDraw");
 	Transactions checkBalance;
-	auto currentbalace = checkBalance.CheckCurrentBalance(accountNumber);
+	const auto currentbalace = checkBalance.CheckCurrentBalance(accountNumber);
 	if (currentbalace > 1000)
 	{
 		Transactions trans;
@@ -115,7 +115,7 @@ void WithDrawTransactionAmount()
 		trans.set_TransactionId(AskAndGetInput<string>("Enter Transaction Id"));
 		trans.set_ETransactionType(ETransactionType::WithDraw);
 		trans.set_Amount(AskAndGetInput<double>("Enter Transaction Amount"));
-		double newbalance = currentbalace - (trans.get_Amount());
+		const double newbalance = currentbalace - (trans.get_Amount());
 		trans.set_Balance(newbalance);
 		cin.ignore();
 		trans.set_TransactionDate(AskAndGetInput<string>("Enter Transaction Date"));
@@ -130,17 +130,17 @@ void WithDrawTransactionAmount()
 void DepositTransactionAmount() 
 {
 	cin.ignore();
-	string accountNumber = AskAndGetInput<string>("Enter Account Number To Deposit");
+	const string accountNumber = AskAndGetInput<string>("Enter Account Number To Deposit");
 	Transactions checkBalance;
-	auto currentbalace = checkBalance.CheckCurrentBalance(accountNumber);
-	if (currentbalace!=0)
+	const auto currentBalance = checkBalance.CheckCurrentBalance(accountNumber);
+	if (currentBalance !=0)
 	{
 		Transactions trans;
 		trans.set_AccountNumber(accountNumber);
 		trans.set_TransactionId(AskAndGetInput<string>("Enter Transaction Id"));
 		trans.set_ETransactionType(ETransactionType::Deposit);
 		trans.set_Amount(AskAndGetInput<double>("Enter Transaction Amount"));
-		double newbalance = currentbalace + (trans.get_Amount());
+		double newbalance = currentBalance + (trans.get_Amount());
 		trans.set_Balance(newbalance);
 		cin.ignore();
 		trans.set_TransactionDate(AskAndGetInput<string>("Enter Transaction Date"));
@@ -148,14 +148,14 @@ void DepositTransactionAmount()
 	}
 	else 
 	{
-		cout << "Invalid Accout Number" << endl;
+		cout << "Invalid Account Number" << endl;
 	}
 	
 }
 void TransactionHistory() 
 {
 	cin.ignore();
-	string accountNumber = AskAndGetInput<string>("Enter Account Number To Deposit");
+	const string accountNumber = AskAndGetInput<string>("Enter Account Number To Deposit");
 	Transactions tr;
 	tr.FindTransactionHistoryByAccountNumber(accountNumber);
 }
@@ -190,7 +190,7 @@ void FindUserAccount()
 void UpdateUserAccount()
 {
 	cin.ignore();
-	auto UserToFind = AskAndGetInput<string>("Enter User Id To Find");
+	const auto UserToFind = AskAndGetInput<string>("Enter User Id To Find");
 	cout << "\nEnter Updated Record" << endl;
 	User UpdatedRecord;
 	UpdatedRecord.set_UserId(UserToFind);
@@ -206,14 +206,14 @@ void UpdateUserAccount()
 void DeactivateUserAccount()
 {
 	cin.ignore();
-	auto UserToFind = AskAndGetInput<string>("Enter User Id To Deactivate User");
+	const auto UserToFind = AskAndGetInput<string>("Enter User Id To Deactivate User");
 	User user;
 	user.ChangeUserActivityStatus(UserToFind,EUserActivityType::Deactive);
 }
 void ReactivateUserAccount()
 {
 	cin.ignore();
-	auto UserToFind = AskAndGetInput<string>("Enter User Id To Re-Activate User");
+	const auto UserToFind = AskAndGetInput<string>("Enter User Id To Re-Activate User");
 	User user;
 	user.ChangeUserActivityStatus(UserToFind, EUserActivityType::Active);
 }
@@ -227,7 +227,7 @@ bool PerformLogin()
 	auto password = AskAndGetInput<string>("Enter Password");
 	auto response = user.PerformLogin(username, password);
 
-	while (!response)//false = login successfull
+	while (!response)
 	{
 		 cout << "PRESS ENTER FROM YOUR KEYBOARD TO RE-ENTER USER NAME AND PASSWORD" << endl;
 		 cin.ignore();
@@ -279,17 +279,17 @@ void StartMyApp()
 						}
 						case 5:
 						{
-							ChangeAccountActitityStatus(EUserActivityType::Active);
+							ChangeAccountActivityStatus(EUserActivityType::Active);
 							break;
 						}
 						case 6:
 						{
-							ChangeAccountActitityStatus(EUserActivityType::Deactive);
+							ChangeAccountActivityStatus(EUserActivityType::Deactive);
 							break;
 						}
 						default:
-							throw runtime_error("ERROR PLEASE SELECT FROM ABOVE BANK MODULE LIST");
 							StartUp();
+							throw runtime_error("ERROR PLEASE SELECT FROM ABOVE BANK MODULE LIST");
 							break;
 					}
 					SelectedCommand = AskToGoBack();
