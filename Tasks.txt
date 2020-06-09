@@ -2,23 +2,27 @@
 =====================
 TASK FOR ---> BMS
 =====================
-___________________________________________________
+____________________________________________________
 |		  |						       |		   |
 |Task-No  |        Details		       |  Status   |
-|_________|____________________________|___________|         
+|_________|____________________________|___________|
 |Task-01: | Account-Create             |   Done    |
 |Task-02: | Account-Find		       |   Done    |
 |Task-03: | Account-Delete		       |   Done    |
 |Task-04: | Account-Update		       |   Done    |
+|Task-04: | Account-Activate		   |   Done	   |
+|Task-04: | Account-De-Activate		   |   Done	   |
 |Task-05: | Transaction-Create         |   Done    |
 |Task-06: | Transaction-Find           |   Done    |
 |Task-07: | Transaction-Delete         |   Done    |
 |Task-08: | Transaction-Update         |   Done    |
-|Task-09: | User-Create                |           |
-|Task-10: | User-Find                  |           |
-|Task-11: | User-Delete                |           |
-|Task-12: | User-Update				   |           |
-|Task-13: | User-Login-Screen		   |		   |
+|Task-09: | User-Create                |   Done    |
+|Task-10: | User-Find                  |   Done    |
+|Task-11: | User-Delete                |   Done    |
+|Task-12: | User-Update				   |   Done    |
+|Task-12: | User-Active				   |   Done    |
+|Task-12: | User-De-Active		       |   Done    |
+|Task-13: | User-Login-Screen		   |   Done	   |
 |_________|____________________________|___________|
 
 
@@ -31,10 +35,10 @@ ____________________________________________________
 |		  |						       |		   |
 |Task-No  |        Details		       |  Status   |
 |_________|____________________________|___________| 
-|Task-01: |  Login-Screen			   |		   |
-|Task-02: |  WithDrawMenu			   |		   |
-|Task-03: |  Change-Pin				   |		   |
-|Task-04: |	 Transaction-History 	   |		   |
+|Task-01: | Account-Login(Ac.no. & Pin)|		   |
+|Task-02: | Transaction-WithDrawMenu   |		   |
+|Task-03: |	Transaction-History 	   |		   |
+|Task-04: | Account-Change-Pin		   |		   |
 |         |							   |		   |
 |         |							   |		   |
 |         |							   |		   |

@@ -3,7 +3,7 @@
 class Transactions : public Accounts
 {
 	string TransactionId;
-	TransactionType TransactionTypes;
+	ETransactionType ETransactionTypes;
 	double Amount;
 	double Balance;
 	string TransactionDate;
@@ -40,25 +40,25 @@ public:
 	{
 		return Amount;
 	}
-	void set_TransactionType(TransactionType TransactionType_inp)
+	void set_ETransactionType(ETransactionType ETransactionType_inp)
 	{
-		TransactionTypes = TransactionType_inp;
+		ETransactionTypes = ETransactionType_inp;
 	}
-	TransactionType get_TransactionType() const
+	ETransactionType get_ETransactionType() const
 	{
-		return TransactionTypes;
+		return ETransactionTypes;
 	}
 	virtual void Display() override
 	{
 		string type;
-		switch (get_TransactionType())
+		switch (get_ETransactionType())
 		{
-			case TransactionType::Deposit:
+			case ETransactionType::Deposit:
 			{
 				type = "Deposit";
 				break;
 			}
-			case TransactionType::WithDraw:
+			case ETransactionType::WithDraw:
 			{
 				type = "Withdraw";
 				break;
@@ -75,18 +75,19 @@ public:
 		cout << setw(ColWidth) << get_AccountNumber() << setw(15) << type <<
 			setw(20) << to_string(get_Amount()) << setw(20) << to_string(get_Balance()) << setw(20) << get_TransactionDate() << endl;
 		cout << "\n\n";
+		CreateLog(ELogType::SuccessFul, "TRANSACTIONS HISTROY DISPLAYED");
 	}
 	string ModelToString()
 	{
 		string type;
-		switch (get_TransactionType())
+		switch (get_ETransactionType())
 		{
-			case TransactionType::Deposit: 
+			case ETransactionType::Deposit: 
 			{
 				type ="D";
 				break;
 			}
-			case TransactionType::WithDraw:
+			case ETransactionType::WithDraw:
 			{
 				type = "W";
 				break;
@@ -133,16 +134,16 @@ public:
 						}
 						if (Attribute == 3)
 						{
-							TransactionType type;
+							ETransactionType type;
 							if (MyAttribute == "D")
 							{
-								type = TransactionType::Deposit;
+								type = ETransactionType::Deposit;
 							}
 							if (MyAttribute == "W")
 							{
-								type = TransactionType::WithDraw;
+								type = ETransactionType::WithDraw;
 							}
-							TransactionLoaded.set_TransactionType(type);
+							TransactionLoaded.set_ETransactionType(type);
 						}
 						if (Attribute == 4)
 						{
@@ -166,7 +167,7 @@ public:
 						index = 0;
 
 						TransactionLoaded.Display();
-
+						CreateLog(ELogType::SuccessFul, "SINGLE TRANSACTION IS DISPLAYED");
 						Data.clear();
 						Attribute = 0;
 					}
@@ -181,14 +182,18 @@ public:
 		if (SaveToFile("Data\\transactions.dat", ModelToString()))
 		{
 			cout << "Saved SuccessFully" << endl;
+			CreateLog(ELogType::SuccessFul, "TRANSACTIONS IS SUCCESSFULLY DONE");
 		}
 		else
 		{
 			cout << "Saving Failed" << endl;
+			CreateLog(ELogType::SuccessFul, "TRANSACTIONS RECORD SAVEING FAILED");
+
 		}
 	}
 	void FindTransactionHistoryByAccountNumber(string ToFindParameter)
 	{
+		CreateLog(ELogType::SuccessFul, ToFindParameter +" IS REQUESTED TO FIND");
 		bool is_found = false;
 		ifstream reader;
 		reader.open("Data\\transactions.dat");
@@ -222,16 +227,16 @@ public:
 						}
 						if (Attribute == 3)
 						{
-							TransactionType type;
+							ETransactionType type;
 							if (MyAttribute == "D")
 							{
-								type = TransactionType::Deposit;
+								type = ETransactionType::Deposit;
 							}
 							if (MyAttribute == "W")
 							{
-								type = TransactionType::WithDraw;
+								type = ETransactionType::WithDraw;
 							}
-							TransactionLoaded.set_TransactionType(type);
+							TransactionLoaded.set_ETransactionType(type);
 						}
 						if (Attribute == 4)
 						{
@@ -258,6 +263,7 @@ public:
 						{
 							is_found = true;
 							TransactionLoaded.Display();
+							CreateLog(ELogType::SuccessFul, ToFindParameter + " IS REQUESTED TO FIND (FOUND)");
 						}
 						Data.clear();
 						Attribute = 0;
@@ -267,11 +273,14 @@ public:
 			if (!is_found)
 			{
 				cout << "NO RECORD FOUND" << endl;
+				CreateLog(ELogType::SuccessFul, ToFindParameter + "IS REQUESTED TO FIND (NOT FOUND)");
 			}
 		}
 	}
 	void DeleteATransaction(string ToFindParameterTransactionId)
 	{
+		CreateLog(ELogType::SuccessFul, ToFindParameterTransactionId + " IS REQUESTED TO DELETE");
+
 		bool is_found = false;
 		ifstream reader("Data\\transactions.dat");
 		if (reader.is_open())
@@ -304,16 +313,16 @@ public:
 						}
 						if (Attribute == 3)
 						{
-							TransactionType type;
+							ETransactionType type;
 							if (MyAttribute == "D")
 							{
-								type = TransactionType::Deposit;
+								type = ETransactionType::Deposit;
 							}
 							if (MyAttribute == "W")
 							{
-								type = TransactionType::WithDraw;
+								type = ETransactionType::WithDraw;
 							}
-							TransactionLoaded.set_TransactionType(type);
+							TransactionLoaded.set_ETransactionType(type);
 						}
 						if (Attribute == 4)
 						{
@@ -354,10 +363,12 @@ public:
 			if (!is_found)
 			{
 				cout << "NO RECORD FOUND" << endl;
+				CreateLog(ELogType::Warning, ToFindParameterTransactionId + " IS REQUESTED TO DELETE (NOT FOUND)");
 			}
 			else
 			{
 				cout << "DELETED SUCESSFULLY" << endl;
+				CreateLog(ELogType::SuccessFul, ToFindParameterTransactionId + " IS DELETED SUCCESSFULLY");
 			}
 			reader.close();
 
@@ -367,6 +378,8 @@ public:
 	}
 	void UpdateTransaction(string ToFindParameterTransactionId, Transactions UpdatedRecord)
 	{
+		CreateLog(ELogType::SuccessFul, ToFindParameterTransactionId + " IS REQUESTED TO UPDATE");
+
 		bool is_found = false;
 		ifstream reader("Data\\transactions.dat");
 		if (reader.is_open())
@@ -399,16 +412,16 @@ public:
 						}
 						if (Attribute == 3)
 						{
-							TransactionType type;
+							ETransactionType type;
 							if (MyAttribute == "D")
 							{
-								type = TransactionType::Deposit;
+								type = ETransactionType::Deposit;
 							}
 							if (MyAttribute == "W")
 							{
-								type = TransactionType::WithDraw;
+								type = ETransactionType::WithDraw;
 							}
-							TransactionLoaded.set_TransactionType(type);
+							TransactionLoaded.set_ETransactionType(type);
 						}
 						if (Attribute == 4)
 						{
@@ -447,10 +460,13 @@ public:
 			if (!is_found)
 			{
 				cout << "NO RECORD FOUND" << endl;
+				CreateLog(ELogType::SuccessFul, ToFindParameterTransactionId + " IS REQUESTED TO UPDATED (NOT FOUND)");
 			}
 			else
 			{
 				cout << "DELETED SUCESSFULLY" << endl;
+				CreateLog(ELogType::SuccessFul, ToFindParameterTransactionId + " IS UPDATED SUCCESSFULLY");
+
 			}
 			reader.close();
 			auto resul = remove("Data\\transactions.dat"); //file containing old record
@@ -459,6 +475,7 @@ public:
 	}
 	double CheckCurrentBalance(string ToFindParamerAccountNumber)
 	{
+		CreateLog(ELogType::SuccessFul, ToFindParamerAccountNumber + " IS REQUESTED TO CHECK CURRENT BALANCE");
 		double CurrentBalance=0;
 		bool is_found = false;
 		ifstream reader;
@@ -493,16 +510,16 @@ public:
 						}
 						if (Attribute == 3)
 						{
-							TransactionType type;
+							ETransactionType type;
 							if (MyAttribute == "D")
 							{
-								type = TransactionType::Deposit;
+								type = ETransactionType::Deposit;
 							}
 							if (MyAttribute == "W")
 							{
-								type = TransactionType::WithDraw;
+								type = ETransactionType::WithDraw;
 							}
-							TransactionLoaded.set_TransactionType(type);
+							TransactionLoaded.set_ETransactionType(type);
 						}
 						if (Attribute == 4)
 						{
@@ -529,6 +546,7 @@ public:
 						{
 							is_found = true;
 							CurrentBalance=TransactionLoaded.get_Balance();
+							CreateLog(ELogType::SuccessFul, ToFindParamerAccountNumber + " IS REQUESTED TO CHECK CURRENT BALANCE (FOUND)");
 						}
 						Data.clear();
 						Attribute = 0;
@@ -536,9 +554,10 @@ public:
 				}
 			}
 			if (!is_found)
-			{
-				//cout << "NO RECORD FOUND" << endl;
+			{				
 				CurrentBalance = 0;
+				CreateLog(ELogType::Warning, ToFindParamerAccountNumber + " IS REQUESTED TO CHECK CURRENT BALANCE (NOT FOUND)");
+
 			}
 		}
 		return CurrentBalance;

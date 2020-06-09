@@ -1,5 +1,13 @@
 #include "Shared.h"
-int main() 
+void StartUp() 
 {
 
+}
+bool PerformLogin() 
+{
+	return true;
+}
+int main() 
+{
+	return 0;
 }

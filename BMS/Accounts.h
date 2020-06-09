@@ -8,7 +8,18 @@ class Accounts :public Customer
 	string AtmCardNumber;
 	string Status;
 	string DateofRegistration;
+	string DebitCardPin;
+	string IsActive;
 public:
+	
+	void set_DebitCardPin(string DebitCardPin_inp)
+	{
+		DebitCardPin = DebitCardPin_inp;
+	}
+	string get_DebitCardPin() const
+	{
+		return DebitCardPin;
+	}
 	void set_DateofRegistration(string DateofRegistration_inp)
 	{
 		DateofRegistration = DateofRegistration_inp;
@@ -66,12 +77,13 @@ public:
 		string ModelString = get_Name() + "," + get_FatherName() + "," + get_ContactNumber() +
 			"," + get_CNIC() + "," + get_Address() + "," + get_AccountNumber() + "," +
 			get_AccountTitle() + "," + get_AtmCardNumber() + "," + get_DateofRegistration() + "," +
-			get_DebitCardNumber() + "," + get_BusinessName() + "," + to_string(get_MonthlyIncome()) + "," +
+			get_DebitCardNumber() + ","+get_DebitCardPin()+"," + get_BusinessName() + "," + to_string(get_MonthlyIncome()) + "," +
 			to_string(get_yearlyIncome()) + "," + get_Status() + ",";
 		return ModelString;
 	}
 	void DisplayAllBankAccountData()
 	{
+		CreateLog(ELogType::Warning," REQUEST TO PRINT ALL ACCOUNTS ");
 		ifstream reader;
 		reader.open("Data\\account.dat");
 		if (reader.is_open())
@@ -136,21 +148,25 @@ public:
 						}
 						if (Attribute == 11)
 						{
-							CurrentAccountLoaded.set_BusinessName(MyAttribute);
+							CurrentAccountLoaded.set_DebitCardPin(MyAttribute);
 						}
 						if (Attribute == 12)
 						{
-							CurrentAccountLoaded.set_MonthlyIncome(stod(MyAttribute));
+							CurrentAccountLoaded.set_BusinessName(MyAttribute);
 						}
 						if (Attribute == 13)
 						{
-							CurrentAccountLoaded.set_yearlyIncome(stod(MyAttribute));
+							CurrentAccountLoaded.set_MonthlyIncome(stod(MyAttribute));
 						}
 						if (Attribute == 14)
 						{
-							CurrentAccountLoaded.set_DateOfBussinessEstablishing((MyAttribute));
+							CurrentAccountLoaded.set_yearlyIncome(stod(MyAttribute));
 						}
 						if (Attribute == 15)
+						{
+							CurrentAccountLoaded.set_DateOfBussinessEstablishing((MyAttribute));
+						}
+						if (Attribute == 16)
 						{
 							CurrentAccountLoaded.set_Status((MyAttribute));
 						}
@@ -164,7 +180,8 @@ public:
 						index = 0;
 
 						CurrentAccountLoaded.Display();
-
+						CreateLog(ELogType::Warning, CurrentAccountLoaded.get_AccountNumber()+" REQUEST TO DISPLAY ACCOUNT");
+						
 						Data.clear();
 						Attribute = 0;
 					}
@@ -179,14 +196,17 @@ public:
 		if (SaveToFile("Data\\account.dat", ModelToString()))
 		{
 			cout << "Saved SuccessFully" << endl;
+			CreateLog(ELogType::SuccessFul, get_AccountNumber()+" ACCOUNT CREATED SUCCESSFULLY");
 		}
 		else
 		{
 			cout << "Saving Failed" << endl;
+			CreateLog(ELogType::Failed, get_AccountNumber() + " ACCOUNT CREATED FAILED");
 		}
 	}
 	void FindBankAccount(string ToFindParameter)
 	{
+		CreateLog(ELogType::SuccessFul, ToFindParameter + " REQUEST TO FIND ACCOUNT");
 		bool is_found = false;
 		ifstream reader;
 		reader.open("Data\\account.dat");
@@ -252,27 +272,30 @@ public:
 						}
 						if (Attribute == 11)
 						{
-							CurrentAccountLoaded.set_BusinessName(MyAttribute);
+							CurrentAccountLoaded.set_DebitCardPin(MyAttribute);
 						}
 						if (Attribute == 12)
 						{
-							CurrentAccountLoaded.set_MonthlyIncome(stod(MyAttribute));
+							CurrentAccountLoaded.set_BusinessName(MyAttribute);
 						}
 						if (Attribute == 13)
 						{
-							CurrentAccountLoaded.set_yearlyIncome(stod(MyAttribute));
+							CurrentAccountLoaded.set_MonthlyIncome(stod(MyAttribute));
 						}
 						if (Attribute == 14)
 						{
-							CurrentAccountLoaded.set_DateOfBussinessEstablishing((MyAttribute));
+							CurrentAccountLoaded.set_yearlyIncome(stod(MyAttribute));
 						}
 						if (Attribute == 15)
+						{
+							CurrentAccountLoaded.set_DateOfBussinessEstablishing((MyAttribute));
+						}
+						if (Attribute == 16)
 						{
 							CurrentAccountLoaded.set_Status((MyAttribute));
 						}
 						MyAttribute.clear();
 						index = 0;
-
 					}
 
 					if (Data[i] == '$')///object completed
@@ -284,6 +307,8 @@ public:
 						{
 							is_found = true;
 							CurrentAccountLoaded.Display();
+							CreateLog(ELogType::SuccessFul, ToFindParameter + " REQUEST TO FIND ACCOUNT (FOUND)");
+
 						}
 						Data.clear();
 						Attribute = 0;
@@ -293,11 +318,14 @@ public:
 			if (!is_found)
 			{
 				cout << "NO RECORD FOUND" << endl;
+				CreateLog(ELogType::Warning, ToFindParameter + " REQUEST TO FIND ACCOUNT (NOT FOUND)");
+
 			}
 		}
 	}
 	void DeleteBankAccount(string ToFindParameter)
 	{
+		CreateLog(ELogType::SuccessFul, ToFindParameter + " REQUEST TO DELETE ACCOUNT");
 		bool is_found = false;
 		ifstream reader("Data\\account.dat");
 		if (reader.is_open())
@@ -327,7 +355,6 @@ public:
 						if (Attribute == 2)
 						{
 							CurrentAccountLoaded.set_FatherName(MyAttribute);
-
 						}
 						if (Attribute == 3)
 						{
@@ -363,21 +390,25 @@ public:
 						}
 						if (Attribute == 11)
 						{
-							CurrentAccountLoaded.set_BusinessName(MyAttribute);
+							CurrentAccountLoaded.set_DebitCardPin(MyAttribute);
 						}
 						if (Attribute == 12)
 						{
-							CurrentAccountLoaded.set_MonthlyIncome(stod(MyAttribute));
+							CurrentAccountLoaded.set_BusinessName(MyAttribute);
 						}
 						if (Attribute == 13)
 						{
-							CurrentAccountLoaded.set_yearlyIncome(stod(MyAttribute));
+							CurrentAccountLoaded.set_MonthlyIncome(stod(MyAttribute));
 						}
 						if (Attribute == 14)
 						{
-							CurrentAccountLoaded.set_DateOfBussinessEstablishing((MyAttribute));
+							CurrentAccountLoaded.set_yearlyIncome(stod(MyAttribute));
 						}
 						if (Attribute == 15)
+						{
+							CurrentAccountLoaded.set_DateOfBussinessEstablishing((MyAttribute));
+						}
+						if (Attribute == 16)
 						{
 							CurrentAccountLoaded.set_Status((MyAttribute));
 						}
@@ -395,10 +426,13 @@ public:
 						if (CurrentAccountLoaded.get_AccountNumber() == ToFindParameter)
 						{
 							is_found = true;
+							CreateLog(ELogType::SuccessFul, ToFindParameter + " REQUEST TO DELETE ACCOUNT (FOUND)");
 						}
 						if (!is_found)
 						{
 							SaveToFile("Data\\temp.dat", CurrentAccountLoaded.ModelToString());
+							CreateLog(ELogType::SuccessFul, CurrentAccountLoaded.get_AccountNumber() + "IS TRANSFERED SUCCESSFULLY TO TEMP.DAT");
+
 						}
 						Data.clear();
 						Attribute = 0;
@@ -421,6 +455,7 @@ public:
 	}
 	void UpdateBankAccount(string ToFindParameter, Accounts UpdatedRecord)
 	{
+		CreateLog(ELogType::SuccessFul, ToFindParameter+" IS REQUESTED TO UPDATE");
 		bool is_found = false;
 		ifstream reader("Data\\account.dat");
 		if (reader.is_open())
@@ -450,7 +485,6 @@ public:
 						if (Attribute == 2)
 						{
 							CurrentAccountLoaded.set_FatherName(MyAttribute);
-
 						}
 						if (Attribute == 3)
 						{
@@ -486,21 +520,25 @@ public:
 						}
 						if (Attribute == 11)
 						{
-							CurrentAccountLoaded.set_BusinessName(MyAttribute);
+							CurrentAccountLoaded.set_DebitCardPin(MyAttribute);
 						}
 						if (Attribute == 12)
 						{
-							CurrentAccountLoaded.set_MonthlyIncome(stod(MyAttribute));
+							CurrentAccountLoaded.set_BusinessName(MyAttribute);
 						}
 						if (Attribute == 13)
 						{
-							CurrentAccountLoaded.set_yearlyIncome(stod(MyAttribute));
+							CurrentAccountLoaded.set_MonthlyIncome(stod(MyAttribute));
 						}
 						if (Attribute == 14)
 						{
-							CurrentAccountLoaded.set_DateOfBussinessEstablishing((MyAttribute));
+							CurrentAccountLoaded.set_yearlyIncome(stod(MyAttribute));
 						}
 						if (Attribute == 15)
+						{
+							CurrentAccountLoaded.set_DateOfBussinessEstablishing((MyAttribute));
+						}
+						if (Attribute == 16)
 						{
 							CurrentAccountLoaded.set_Status((MyAttribute));
 						}
@@ -519,6 +557,7 @@ public:
 						{
 							is_found = true;
 							CurrentAccountLoaded = UpdatedRecord;
+							CreateLog(ELogType::SuccessFul, CurrentAccountLoaded.get_AccountNumber() + "IS UPDATED SUCCESSFULLY ");
 						}
 						SaveToFile("Data\\temp.dat", CurrentAccountLoaded.ModelToString());
 						Data.clear();
@@ -529,14 +568,168 @@ public:
 			if (!is_found)
 			{
 				cout << "NO RECORD FOUND" << endl;
+				CreateLog(ELogType::SuccessFul, ToFindParameter+" IS REQUESTED TO UPDATED (NOT FOUND)");
 			}
 			else
 			{
-				cout << "DELETED SUCESSFULLY" << endl;
+				cout << "UPDATE SUCESSFULLY" << endl;
 			}
 			reader.close();
 			auto resul = remove("Data\\account.dat"); //file containing old record
 			auto result = rename("Data\\temp.dat", "Data\\account.dat"); //file containing new record
+		}
+		else 
+		{
+			throw runtime_error("ACCOUNT FILE CANN'T BE OPEN");			
+		}
+	}
+	void ChangeAccountActivityStatus(string ToFindAccountNo,EUserActivityType ActivityType)
+	{
+		CreateLog(ELogType::SuccessFul, ToFindAccountNo + " IS REQUESTED TO CHANGE ACTIVITY STATUS");
+		bool is_found = false;
+		ifstream reader("Data\\account.dat");
+		if (reader.is_open())
+		{
+			string Data, MyAttribute;
+			int Attribute = 0, index = 0;
+			while (getline(reader, Data))//read a line 
+			{
+				Accounts CurrentAccountLoaded;
+				int datalength = Data.length();
+				for (int i = 0; i < datalength; i++)
+				{
+					if (Data[i] != ',')
+					{
+						MyAttribute.insert(index, 1, Data[i]);
+						index++;
+
+					}
+					else
+					{
+						Attribute++;
+
+						if (Attribute == 1)
+						{
+							CurrentAccountLoaded.set_Name(MyAttribute);
+						}
+						if (Attribute == 2)
+						{
+							CurrentAccountLoaded.set_FatherName(MyAttribute);
+						}
+						if (Attribute == 3)
+						{
+							CurrentAccountLoaded.set_ContactNumber(MyAttribute);
+						}
+						if (Attribute == 4)
+						{
+							CurrentAccountLoaded.set_CNIC(MyAttribute);
+						}
+						if (Attribute == 5)
+						{
+							CurrentAccountLoaded.set_Address(MyAttribute);
+						}
+						if (Attribute == 6)
+						{
+							CurrentAccountLoaded.set_AccountNumber(MyAttribute);
+						}
+						if (Attribute == 7)
+						{
+							CurrentAccountLoaded.set_AccountTitle(MyAttribute);
+						}
+						if (Attribute == 8)
+						{
+							CurrentAccountLoaded.set_AtmCardNumber(MyAttribute);
+						}
+						if (Attribute == 9)
+						{
+							CurrentAccountLoaded.set_DateofRegistration(MyAttribute);
+						}
+						if (Attribute == 10)
+						{
+							CurrentAccountLoaded.set_DebitCardNumber(MyAttribute);
+						}
+						if (Attribute == 11)
+						{
+							CurrentAccountLoaded.set_DebitCardPin(MyAttribute);
+						}
+						if (Attribute == 12)
+						{
+							CurrentAccountLoaded.set_BusinessName(MyAttribute);
+						}
+						if (Attribute == 13)
+						{
+							CurrentAccountLoaded.set_MonthlyIncome(stod(MyAttribute));
+						}
+						if (Attribute == 14)
+						{
+							CurrentAccountLoaded.set_yearlyIncome(stod(MyAttribute));
+						}
+						if (Attribute == 15)
+						{
+							CurrentAccountLoaded.set_DateOfBussinessEstablishing((MyAttribute));
+						}
+						if (Attribute == 16)
+						{
+							CurrentAccountLoaded.set_Status((MyAttribute));
+						}
+						MyAttribute.clear();
+						index = 0;
+					}
+
+					if (Data[i] == '$')///object completed
+					{
+						MyAttribute.clear();
+						index = 0;
+						//<After finding specific account to delete>
+						//<we create a new file temp.dat in which we transfer all record and then rename this file to account.dat>
+
+						if (CurrentAccountLoaded.get_AccountNumber() == ToFindAccountNo)
+						{
+							is_found = true;
+							switch (ActivityType)
+							{
+								case EUserActivityType::Active:
+								{
+									CurrentAccountLoaded.set_Status("A");
+									break;
+								}
+								case EUserActivityType::Deactive:
+								{
+									CurrentAccountLoaded.set_Status("D");
+									break;
+								}
+								default:
+								{									
+									throw runtime_error("Invalid Activity Type is Selected");
+									StartUp();
+									break;
+								}
+							}
+							CreateLog(ELogType::SuccessFul, CurrentAccountLoaded.get_AccountNumber() + "STATUS IS CHANGED TO" + "(" +get_Status()+")");
+						}
+						SaveToFile("Data\\temp.dat", CurrentAccountLoaded.ModelToString());
+						Data.clear();
+						Attribute = 0;
+					}
+				}
+			}
+			if (!is_found)
+			{
+				cout << "NO RECORD FOUND" << endl;
+				CreateLog(ELogType::SuccessFul, ToFindAccountNo + " REQUESTED TO CHANGE ACTIVITY STATUS (NOT FOUND)");
+			}
+			else
+			{
+				cout << "ACTIVITY CHANGED SUCESSFULLY" << endl;
+				CreateLog(ELogType::SuccessFul, ToFindAccountNo + " STATUS  IS ACTIVITY STATUS IS CHANGED TO" + "(" + get_Status() + ")");
+			}
+			reader.close();
+			auto IsRemoved = remove("Data\\account.dat"); //file containing old record
+			auto IsRenamed= rename("Data\\temp.dat", "Data\\account.dat"); //file containing new record
+		}
+		else
+		{
+			throw runtime_error("ACCOUNT FILE CANN'T BE OPEN");
 		}
 	}
 	Accounts()
