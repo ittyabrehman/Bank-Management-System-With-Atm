@@ -79,6 +79,8 @@ public:
 			get_AccountTitle() + "," + get_AtmCardNumber() + "," + get_DateofRegistration() + "," +
 			get_DebitCardNumber() + ","+get_DebitCardPin()+"," + get_BusinessName() + "," + to_string(get_MonthlyIncome()) + "," +
 			to_string(get_yearlyIncome()) + "," + get_Status() + ",";
+		
+		    CreateLog(ELogType::Failed, "ACCOUNT MODEL TO STRING IS REQUESTED & CREATED SUCCESSFULLY");		
 		return ModelString;
 	}
 	void DisplayAllBankAccountData()
@@ -188,6 +190,10 @@ public:
 				}
 
 			}
+		}
+		else
+		{
+		  CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
 	}
 	void CreateNewBankAccount()
@@ -322,6 +328,10 @@ public:
 
 			}
 		}
+		else
+		{
+		  CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
+		}
 	}
 	void DeleteBankAccount(string ToFindParameter)
 	{
@@ -452,6 +462,10 @@ public:
 			auto isRemoved = remove("Data\\account.dat"); //file containing old record
 			auto isRenamed = rename("Data\\temp.dat", "Data\\account.dat"); //file containing new record
 		}
+		else
+		{
+		  CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
+		}
 	}
 	void UpdateBankAccount(string ToFindParameter, Accounts UpdatedRecord)
 	{
@@ -578,9 +592,9 @@ public:
 			auto resul = remove("Data\\account.dat"); //file containing old record
 			auto result = rename("Data\\temp.dat", "Data\\account.dat"); //file containing new record
 		}
-		else 
+		else
 		{
-			throw runtime_error("ACCOUNT FILE CANN'T BE OPEN");			
+		  CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
 	}
 	void ChangeAccountActivityStatus(string ToFindAccountNo,EUserActivityType ActivityType)
@@ -729,7 +743,7 @@ public:
 		}
 		else
 		{
-			throw runtime_error("ACCOUNT FILE CANN'T BE OPEN");
+		  CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
 	}
 	Accounts()

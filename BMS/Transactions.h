@@ -99,7 +99,9 @@ public:
 		string ModelString = get_AccountNumber()+","+get_TransactionId()+","+ type + "," + 
 			to_string(get_Amount())+","+to_string(get_Balance())+","+
 			get_TransactionDate()+",";
-		return ModelString;
+
+		CreateLog(ELogType::Failed, "TRANSACTION MODEL TO STRING IS REQUESTED & CREATED SUCESSFULLY");
+    	return ModelString;
 	}
 	void DisplayAllAccountTransaction()
 	{
@@ -174,6 +176,10 @@ public:
 				}
 
 			}
+		}
+		else
+		{
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
 	}
 	void CreateNewTransction()
@@ -276,6 +282,10 @@ public:
 				CreateLog(ELogType::SuccessFul, ToFindParameter + "IS REQUESTED TO FIND (NOT FOUND)");
 			}
 		}
+		else
+		{
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
+		}
 	}
 	void DeleteATransaction(string ToFindParameterTransactionId)
 	{
@@ -375,6 +385,10 @@ public:
 			auto isRemoved = remove("Data\\transactions.dat"); //file containing old record
 			auto isRenamed = rename("Data\\temp.dat", "Data\\transactions.dat"); //file containing new record
 		}
+		else
+		{
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
+		}
 	}
 	void UpdateTransaction(string ToFindParameterTransactionId, Transactions UpdatedRecord)
 	{
@@ -472,6 +486,10 @@ public:
 			auto resul = remove("Data\\transactions.dat"); //file containing old record
 			auto result = rename("Data\\temp.dat", "Data\\transactions.dat"); //file containing new record
 		}
+		else
+		{
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
+		}
 	}
 	double CheckCurrentBalance(string ToFindParamerAccountNumber)
 	{
@@ -559,6 +577,10 @@ public:
 				CreateLog(ELogType::Warning, ToFindParamerAccountNumber + " IS REQUESTED TO CHECK CURRENT BALANCE (NOT FOUND)");
 
 			}
+		}
+		else
+		{
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
 		return CurrentBalance;
 	}

@@ -63,7 +63,7 @@ public:
 	{
 		string ModelString = get_UserId()+","+get_Name() + "," + get_FatherName() + "," +
 			get_UserName() + ","+get_Password() + "," +get_Email() + ","+get_IsActive()+",";
-		CreateLog(ELogType::SuccessFul, "NEW MODELTOSTRING CREATED SUCCESSFULLY");
+		CreateLog(ELogType::SuccessFul, "NEW MODEL TO STRING REQUESTED & CREATED SUCCESSFULLY");
 		return ModelString;
 	}
 	void CreateNewUserAccount()
@@ -76,7 +76,7 @@ public:
 		else
 		{
 			cout << "Saving Failed" << endl;
-			CreateLog(ELogType::SuccessFul, "NEW USER CREATED FAILED");
+			CreateLog(ELogType::Failed, "NEW USER CREATED FAILED");
 
 		}
 	}
@@ -163,6 +163,10 @@ public:
 				CreateLog(ELogType::SuccessFul, ToFindParmaterUserId + " IS REQUESTED TO FIND (NOT FOUND)");
 
 			}
+		}
+		else
+		{
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
 	}
 	void DeleteUserAccount(string ToFindParmaterUserId)
@@ -261,6 +265,10 @@ public:
 			auto isRemoved = remove("Data\\users.dat"); //file containing old record
 			auto isRenamed = rename("Data\\temp.dat", "Data\\users.dat"); //file containing new record
 		}
+		else
+		{
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
+		}
 	}
 	void UpdateUserAccount(string ToFindParameterUserId, User UpdatedRecord)
 	{
@@ -352,6 +360,10 @@ public:
 			reader.close();
 			auto IsRemoved = remove("Data\\users.dat"); //file containing old record
 			auto IsRenamed = rename("Data\\temp.dat", "Data\\users.dat"); //file containing new record
+		}
+		else
+		{
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
 	}
 	bool PerformLogin(string username,string password)
@@ -454,7 +466,7 @@ public:
 		}
 		else 
 		{
-			throw runtime_error("USER FILE CANNOT BE OPEN");
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 			return false;
 		}
 	}
@@ -568,6 +580,10 @@ public:
 			auto IsRemoved = remove("Data\\users.dat"); //file containing old record
 			auto IsRenamed = rename("Data\\temp.dat", "Data\\users.dat"); //file containing new record
 		
+		}
+		else 
+		{
+    		CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
 	}	
 	User()
