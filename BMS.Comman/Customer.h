@@ -1,5 +1,5 @@
 #pragma once
-#include "Abstracts.h"
+#include "Shared.h"
 class Customer : public Person
 {
 	string BusinessName;

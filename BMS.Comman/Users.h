@@ -1,5 +1,5 @@
 #pragma once
-#include "Abstracts.h"
+#include "Shared.h"
 class User : public Person
 {
 	string UserName;
@@ -56,13 +56,13 @@ public:
 		cout << "User Id: " << get_UserId() << endl;
 		cout << "Name: " << get_Name() << endl;
 		cout << "Father Name: " << get_FatherName() << endl;
-		cout << "User Name: " << get_UserName()<<endl;	
-		cout << "Email: " << get_Email()<<endl;
+		cout << "User Name: " << get_UserName() << endl;
+		cout << "Email: " << get_Email() << endl;
 	}
-	string ModelToString() 
+	string ModelToString()
 	{
-		string ModelString = get_UserId()+","+get_Name() + "," + get_FatherName() + "," +
-			get_UserName() + ","+get_Password() + "," +get_Email() + ","+get_IsActive()+",";
+		string ModelString = get_UserId() + "," + get_Name() + "," + get_FatherName() + "," +
+			get_UserName() + "," + get_Password() + "," + get_Email() + "," + get_IsActive() + ",";
 		CreateLog(ELogType::SuccessFul, "NEW MODEL TO STRING REQUESTED & CREATED SUCCESSFULLY");
 		return ModelString;
 	}
@@ -71,7 +71,7 @@ public:
 		if (SaveToFile("Data\\users.dat", ModelToString()))
 		{
 			cout << "Saved SuccessFully" << endl;
-			CreateLog(ELogType::SuccessFul,"NEW USER CREATED SUCCESSFULLY");
+			CreateLog(ELogType::SuccessFul, "NEW USER CREATED SUCCESSFULLY");
 		}
 		else
 		{
@@ -80,9 +80,9 @@ public:
 
 		}
 	}
-	void FindUserAccount(string ToFindParmaterUserId) 
+	void FindUserAccount(string ToFindParmaterUserId)
 	{
-		CreateLog(ELogType::SuccessFul, ToFindParmaterUserId+" IS REQUESTED TO FIND");
+		CreateLog(ELogType::SuccessFul, ToFindParmaterUserId + " IS REQUESTED TO FIND");
 
 		bool is_found = false;
 		ifstream reader;
@@ -225,9 +225,9 @@ public:
 						MyAttribute.clear();
 						index = 0;
 
-					}					
-				
-				
+					}
+
+
 					if (Data[i] == '$')///object completed
 					{
 						MyAttribute.clear();
@@ -366,7 +366,7 @@ public:
 			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
 	}
-	bool PerformLogin(string username,string password)
+	bool PerformLogin(string username, string password)
 	{
 		CreateLog(ELogType::SuccessFul, username + " IS REQUESTED TO LOGIN ");
 		bool is_found = false;
@@ -432,25 +432,25 @@ public:
 						//compare with Parameters
 						if (UserLoaded.get_UserName() == username && UserLoaded.get_Password() == password)
 						{
-							if (UserLoaded.get_IsActive()=="A")
+							if (UserLoaded.get_IsActive() == "A")
 							{
 								CreateLog(ELogType::SuccessFul, username + " IS LOGIN SUCCESSFULLY");
 								return true;//when login sucessFully
 							}
-							else 
+							else
 							{
 								cout << "ACCESS DENINED. YOUR ACCOUNT IS DEACTIVATED BY ADMIN" << endl;
 								CreateLog(ELogType::SuccessFul, username + " ACCESS DENINED. YOUR ACCOUNT IS DEACTIVATED BY ADMIN");
 								return false;
 							}
 							is_found = true;
-						
+
 						}
 						Data.clear();
 						Attribute = 0;
 					}
 				}
-				
+
 			}
 			if (!is_found)
 			{
@@ -458,19 +458,19 @@ public:
 				CreateLog(ELogType::SuccessFul, username + " IS REQUESTED TO LOGIN (NOT FOUND)");
 				return false;
 			}
-			else 
+			else
 			{
 				CreateLog(ELogType::SuccessFul, username + " IS REQUESTED TO LOGIN (FOUND & Validate Username and password)");
 				return true;
 			}
 		}
-		else 
+		else
 		{
 			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 			return false;
 		}
 	}
-	void ChangeUserActivityStatus(string ToFindParameterUserId,EUserActivityType ActivityType)
+	void ChangeUserActivityStatus(string ToFindParameterUserId, EUserActivityType ActivityType)
 	{
 		CreateLog(ELogType::SuccessFul, ToFindParameterUserId + " IS REQUESTED FOR CHANGE USER ACCOUNT STATUS");
 		bool is_found = false;
@@ -539,26 +539,26 @@ public:
 							is_found = true;
 							switch (ActivityType)
 							{
-								case EUserActivityType::Active:
-								{
-									UserLoaded.set_IsActive("A");
-									break;
-								}
-								case EUserActivityType::Deactive:
-								{
-									UserLoaded.set_IsActive("D");
-									break;
-								}
-								default:
-								{
-									UserLoaded.set_IsActive("Invalid");
-									throw runtime_error("Invalid Activity Type is Selected");								
-									StartUp();
-									break; 
-								}
+							case EUserActivityType::Active:
+							{
+								UserLoaded.set_IsActive("A");
+								break;
 							}
-							CreateLog(ELogType::SuccessFul, ToFindParameterUserId + " ACCOUNT STATUS CHANGED TO ("+ UserLoaded.get_IsActive()+")");
-										
+							case EUserActivityType::Deactive:
+							{
+								UserLoaded.set_IsActive("D");
+								break;
+							}
+							default:
+							{
+								UserLoaded.set_IsActive("Invalid");
+								throw runtime_error("Invalid Activity Type is Selected");
+								StartUp();
+								break;
+							}
+							}
+							CreateLog(ELogType::SuccessFul, ToFindParameterUserId + " ACCOUNT STATUS CHANGED TO (" + UserLoaded.get_IsActive() + ")");
+
 						}
 						SaveToFile("Data\\temp.dat", UserLoaded.ModelToString());
 						CreateLog(ELogType::SuccessFul, ToFindParameterUserId + " ACCOUNT TRANSFERED TO TEMP.DAT");
@@ -579,15 +579,15 @@ public:
 			reader.close();
 			auto IsRemoved = remove("Data\\users.dat"); //file containing old record
 			auto IsRenamed = rename("Data\\temp.dat", "Data\\users.dat"); //file containing new record
-		
+
 		}
-		else 
+		else
 		{
-    		CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
-	}	
+	}
 	User()
 	{
-		UserName = Password = Email = UserId=IsActive="";
+		UserName = Password = Email = UserId = IsActive = "";
 	}
 };

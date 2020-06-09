@@ -1,5 +1,5 @@
 #pragma once
-#include "Abstracts.h"
+#include "Shared.h"
 class Transactions : public Accounts
 {
 	string TransactionId;
@@ -53,24 +53,24 @@ public:
 		string type;
 		switch (get_ETransactionType())
 		{
-			case ETransactionType::Deposit:
-			{
-				type = "Deposit";
-				break;
-			}
-			case ETransactionType::WithDraw:
-			{
-				type = "Withdraw";
-				break;
-			}
-			default:
-				type = "";
-				break;
-		}	
-		BuilApplicationHeader("TRANSACTIONS NUMBER = "+ get_TransactionId());
+		case ETransactionType::Deposit:
+		{
+			type = "Deposit";
+			break;
+		}
+		case ETransactionType::WithDraw:
+		{
+			type = "Withdraw";
+			break;
+		}
+		default:
+			type = "";
+			break;
+		}
+		BuilApplicationHeader("TRANSACTIONS NUMBER = " + get_TransactionId());
 		int ColWidth = 10;
 		//
-		cout << setw(ColWidth) << "ACCOUNT NUMBER" << setw(ColWidth) << "TYPE" 
+		cout << setw(ColWidth) << "ACCOUNT NUMBER" << setw(ColWidth) << "TYPE"
 			<< setw(20) << "AMOUNT" << setw(20) << "BALANCE" << setw(20) << "TRANSACTION DATE" << endl;
 		cout << setw(ColWidth) << get_AccountNumber() << setw(15) << type <<
 			setw(20) << to_string(get_Amount()) << setw(20) << to_string(get_Balance()) << setw(20) << get_TransactionDate() << endl;
@@ -82,26 +82,26 @@ public:
 		string type;
 		switch (get_ETransactionType())
 		{
-			case ETransactionType::Deposit: 
-			{
-				type ="D";
-				break;
-			}
-			case ETransactionType::WithDraw:
-			{
-				type = "W";
-				break;
-			}
+		case ETransactionType::Deposit:
+		{
+			type = "D";
+			break;
+		}
+		case ETransactionType::WithDraw:
+		{
+			type = "W";
+			break;
+		}
 		default:
 			type = "";
 			break;
 		}
-		string ModelString = get_AccountNumber()+","+get_TransactionId()+","+ type + "," + 
-			to_string(get_Amount())+","+to_string(get_Balance())+","+
-			get_TransactionDate()+",";
+		string ModelString = get_AccountNumber() + "," + get_TransactionId() + "," + type + "," +
+			to_string(get_Amount()) + "," + to_string(get_Balance()) + "," +
+			get_TransactionDate() + ",";
 
 		CreateLog(ELogType::Failed, "TRANSACTION MODEL TO STRING IS REQUESTED & CREATED SUCESSFULLY");
-    	return ModelString;
+		return ModelString;
 	}
 	void DisplayAllAccountTransaction()
 	{
@@ -130,7 +130,7 @@ public:
 						{
 							TransactionLoaded.set_AccountNumber(MyAttribute);
 						}
-						if (Attribute==2)
+						if (Attribute == 2)
 						{
 							TransactionLoaded.set_TransactionId(MyAttribute);
 						}
@@ -199,7 +199,7 @@ public:
 	}
 	void FindTransactionHistoryByAccountNumber(string ToFindParameter)
 	{
-		CreateLog(ELogType::SuccessFul, ToFindParameter +" IS REQUESTED TO FIND");
+		CreateLog(ELogType::SuccessFul, ToFindParameter + " IS REQUESTED TO FIND");
 		bool is_found = false;
 		ifstream reader;
 		reader.open("Data\\transactions.dat");
@@ -257,7 +257,7 @@ public:
 							TransactionLoaded.set_TransactionDate((MyAttribute));
 						}
 						MyAttribute.clear();
-						index = 0;					
+						index = 0;
 					}
 
 					if (Data[i] == '$')///object completed
@@ -494,7 +494,7 @@ public:
 	double CheckCurrentBalance(string ToFindParamerAccountNumber)
 	{
 		CreateLog(ELogType::SuccessFul, ToFindParamerAccountNumber + " IS REQUESTED TO CHECK CURRENT BALANCE");
-		double CurrentBalance=0;
+		double CurrentBalance = 0;
 		bool is_found = false;
 		ifstream reader;
 		reader.open("Data\\transactions.dat");
@@ -563,7 +563,7 @@ public:
 						if (TransactionLoaded.get_AccountNumber() == ToFindParamerAccountNumber)
 						{
 							is_found = true;
-							CurrentBalance=TransactionLoaded.get_Balance();
+							CurrentBalance = TransactionLoaded.get_Balance();
 							CreateLog(ELogType::SuccessFul, ToFindParamerAccountNumber + " IS REQUESTED TO CHECK CURRENT BALANCE (FOUND)");
 						}
 						Data.clear();
@@ -572,7 +572,7 @@ public:
 				}
 			}
 			if (!is_found)
-			{				
+			{
 				CurrentBalance = 0;
 				CreateLog(ELogType::Warning, ToFindParamerAccountNumber + " IS REQUESTED TO CHECK CURRENT BALANCE (NOT FOUND)");
 
@@ -586,7 +586,7 @@ public:
 	}
 	Transactions()
 	{
-		TransactionId= TransactionDate = "";
+		TransactionId = TransactionDate = "";
 		Amount = Balance = 0;
 	}
 };

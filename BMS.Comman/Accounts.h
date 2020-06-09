@@ -1,5 +1,6 @@
 #pragma once
-#include "Abstracts.h"
+#include "Shared.h"
+
 class Accounts :public Customer
 {
 	string AccountTitle;
@@ -11,7 +12,7 @@ class Accounts :public Customer
 	string DebitCardPin;
 	string IsActive;
 public:
-	
+
 	void set_DebitCardPin(string DebitCardPin_inp)
 	{
 		DebitCardPin = DebitCardPin_inp;
@@ -77,15 +78,15 @@ public:
 		string ModelString = get_Name() + "," + get_FatherName() + "," + get_ContactNumber() +
 			"," + get_CNIC() + "," + get_Address() + "," + get_AccountNumber() + "," +
 			get_AccountTitle() + "," + get_AtmCardNumber() + "," + get_DateofRegistration() + "," +
-			get_DebitCardNumber() + ","+get_DebitCardPin()+"," + get_BusinessName() + "," + to_string(get_MonthlyIncome()) + "," +
+			get_DebitCardNumber() + "," + get_DebitCardPin() + "," + get_BusinessName() + "," + to_string(get_MonthlyIncome()) + "," +
 			to_string(get_yearlyIncome()) + "," + get_Status() + ",";
-		
-		    CreateLog(ELogType::Failed, "ACCOUNT MODEL TO STRING IS REQUESTED & CREATED SUCCESSFULLY");		
+
+		CreateLog(ELogType::Failed, "ACCOUNT MODEL TO STRING IS REQUESTED & CREATED SUCCESSFULLY");
 		return ModelString;
 	}
 	void DisplayAllBankAccountData()
 	{
-		CreateLog(ELogType::Warning," REQUEST TO PRINT ALL ACCOUNTS ");
+		CreateLog(ELogType::Warning, " REQUEST TO PRINT ALL ACCOUNTS ");
 		ifstream reader;
 		reader.open("Data\\account.dat");
 		if (reader.is_open())
@@ -182,8 +183,8 @@ public:
 						index = 0;
 
 						CurrentAccountLoaded.Display();
-						CreateLog(ELogType::Warning, CurrentAccountLoaded.get_AccountNumber()+" REQUEST TO DISPLAY ACCOUNT");
-						
+						CreateLog(ELogType::Warning, CurrentAccountLoaded.get_AccountNumber() + " REQUEST TO DISPLAY ACCOUNT");
+
 						Data.clear();
 						Attribute = 0;
 					}
@@ -193,7 +194,7 @@ public:
 		}
 		else
 		{
-		  CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
 	}
 	void CreateNewBankAccount()
@@ -202,7 +203,7 @@ public:
 		if (SaveToFile("Data\\account.dat", ModelToString()))
 		{
 			cout << "Saved SuccessFully" << endl;
-			CreateLog(ELogType::SuccessFul, get_AccountNumber()+" ACCOUNT CREATED SUCCESSFULLY");
+			CreateLog(ELogType::SuccessFul, get_AccountNumber() + " ACCOUNT CREATED SUCCESSFULLY");
 		}
 		else
 		{
@@ -330,7 +331,7 @@ public:
 		}
 		else
 		{
-		  CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
 	}
 	void DeleteBankAccount(string ToFindParameter)
@@ -464,12 +465,12 @@ public:
 		}
 		else
 		{
-		  CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
 	}
 	void UpdateBankAccount(string ToFindParameter, Accounts UpdatedRecord)
 	{
-		CreateLog(ELogType::SuccessFul, ToFindParameter+" IS REQUESTED TO UPDATE");
+		CreateLog(ELogType::SuccessFul, ToFindParameter + " IS REQUESTED TO UPDATE");
 		bool is_found = false;
 		ifstream reader("Data\\account.dat");
 		if (reader.is_open())
@@ -582,7 +583,7 @@ public:
 			if (!is_found)
 			{
 				cout << "NO RECORD FOUND" << endl;
-				CreateLog(ELogType::SuccessFul, ToFindParameter+" IS REQUESTED TO UPDATED (NOT FOUND)");
+				CreateLog(ELogType::SuccessFul, ToFindParameter + " IS REQUESTED TO UPDATED (NOT FOUND)");
 			}
 			else
 			{
@@ -594,10 +595,10 @@ public:
 		}
 		else
 		{
-		  CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
 	}
-	void ChangeAccountActivityStatus(string ToFindAccountNo,EUserActivityType ActivityType)
+	void ChangeAccountActivityStatus(string ToFindAccountNo, EUserActivityType ActivityType)
 	{
 		CreateLog(ELogType::SuccessFul, ToFindAccountNo + " IS REQUESTED TO CHANGE ACTIVITY STATUS");
 		bool is_found = false;
@@ -702,24 +703,24 @@ public:
 							is_found = true;
 							switch (ActivityType)
 							{
-								case EUserActivityType::Active:
-								{
-									CurrentAccountLoaded.set_Status("A");
-									break;
-								}
-								case EUserActivityType::Deactive:
-								{
-									CurrentAccountLoaded.set_Status("D");
-									break;
-								}
-								default:
-								{									
-									throw runtime_error("Invalid Activity Type is Selected");
-									StartUp();
-									break;
-								}
+							case EUserActivityType::Active:
+							{
+								CurrentAccountLoaded.set_Status("A");
+								break;
 							}
-							CreateLog(ELogType::SuccessFul, CurrentAccountLoaded.get_AccountNumber() + "STATUS IS CHANGED TO" + "(" +get_Status()+")");
+							case EUserActivityType::Deactive:
+							{
+								CurrentAccountLoaded.set_Status("D");
+								break;
+							}
+							default:
+							{
+								throw runtime_error("Invalid Activity Type is Selected");
+								StartUp();
+								break;
+							}
+							}
+							CreateLog(ELogType::SuccessFul, CurrentAccountLoaded.get_AccountNumber() + "STATUS IS CHANGED TO" + "(" + get_Status() + ")");
 						}
 						SaveToFile("Data\\temp.dat", CurrentAccountLoaded.ModelToString());
 						Data.clear();
@@ -739,11 +740,11 @@ public:
 			}
 			reader.close();
 			auto IsRemoved = remove("Data\\account.dat"); //file containing old record
-			auto IsRenamed= rename("Data\\temp.dat", "Data\\account.dat"); //file containing new record
+			auto IsRenamed = rename("Data\\temp.dat", "Data\\account.dat"); //file containing new record
 		}
 		else
 		{
-		  CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
+			CreateLog(ELogType::Failed, "USER FILE CANNOT BE OPEN");
 		}
 	}
 	Accounts()

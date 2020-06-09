@@ -2,7 +2,7 @@
 /// <summary>
 /// BASE CLASS
 /// </summary>
-#include "Abstracts.h"
+#include "Shared.h"
 class Person
 {
 	string Name;

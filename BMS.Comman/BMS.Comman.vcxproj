@@ -140,6 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Shared.h" />
+    <ClInclude Include="Accounts.h" />
+    <ClInclude Include="Base.h" />
+    <ClInclude Include="Customer.h" />
+    <ClInclude Include="Person.h" />
+    <ClInclude Include="Transactions.h" />
+    <ClInclude Include="Users.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
