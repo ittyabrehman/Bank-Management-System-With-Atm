@@ -2,9 +2,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <iomanip>
+#include <iomanip>     // setw()
 #include<stdio.h>     //for File remove( ) and rename( )
-
 using namespace std;
 template<typename T>T AskAndGetInput(string questionHeader)
 {	

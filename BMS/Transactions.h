@@ -537,7 +537,8 @@ public:
 			}
 			if (!is_found)
 			{
-				cout << "NO RECORD FOUND" << endl;
+				//cout << "NO RECORD FOUND" << endl;
+				CurrentBalance = 0;
 			}
 		}
 		return CurrentBalance;

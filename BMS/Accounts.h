@@ -67,7 +67,7 @@ public:
 			"," + get_CNIC() + "," + get_Address() + "," + get_AccountNumber() + "," +
 			get_AccountTitle() + "," + get_AtmCardNumber() + "," + get_DateofRegistration() + "," +
 			get_DebitCardNumber() + "," + get_BusinessName() + "," + to_string(get_MonthlyIncome()) + "," +
-			to_string(get_yearlyIncome()) + "," + get_DateOfBussinessEstablishing() + "," + get_Status() + ",";
+			to_string(get_yearlyIncome()) + "," + get_Status() + ",";
 		return ModelString;
 	}
 	void DisplayAllBankAccountData()
@@ -270,6 +270,8 @@ public:
 						{
 							CurrentAccountLoaded.set_Status((MyAttribute));
 						}
+						MyAttribute.clear();
+						index = 0;
 
 					}
 

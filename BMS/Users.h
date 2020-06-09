@@ -5,7 +5,27 @@ class User : public Person
 	string UserName;
 	string Password;
 	string Email;
+	string UserId;
+	string IsActive;
 public:
+	void set_IsActive(string IsActive_inp)
+	{
+		IsActive = IsActive_inp;
+	}
+	string get_IsActive() const
+	{
+		return IsActive;
+	}
+
+	void set_UserId(string UserId_inp)
+	{
+		UserId = UserId_inp;
+	}
+	string get_UserId() const
+	{
+		return UserId;
+	}
+
 	void set_Email(string Email_inp)
 	{
 		Email = Email_inp;
@@ -32,19 +52,523 @@ public:
 	}
 	virtual void Display() override
 	{
-
+		cout << "User Id: " << get_UserId() << endl;
+		cout << "Name: " << get_Name() << endl;
+		cout << "Father Name: " << get_FatherName() << endl;
+		cout << "User Name: " << get_UserName()<<endl;	
+		cout << "Email: " << get_Email()<<endl;
 	}
-	void write()
+	string ModelToString() 
 	{
-
+		string ModelString = get_UserId()+","+get_Name() + "," + get_FatherName() + "," +
+			get_UserName() + ","+get_Password() + "," +get_Email() + ","+get_IsActive()+",";
+		return ModelString;
 	}
-	void PerformLogin()
+	void CreateNewUserAccount()
 	{
+		if (SaveToFile("Data\\users.dat", ModelToString()))
+		{
+			cout << "Saved SuccessFully" << endl;
+		}
+		else
+		{
+			cout << "Saving Failed" << endl;
+		}
+	}
+	void FindUserAccount(string ToFindParmaterUserId) 
+	{
+		bool is_found = false;
+		ifstream reader;
+		reader.open("Data\\users.dat");
+		if (reader.is_open())
+		{
+			string Data, MyAttribute;
+			int Attribute = 0, index = 0;
+			while (getline(reader, Data))
+			{
+				User UserLoaded;
+				int datalength = Data.length();
+				for (int i = 0; i < datalength; i++)
+				{
+					if (Data[i] != ',')
+					{
+						MyAttribute.insert(index, 1, Data[i]);
+						index++;
 
+					}
+					else
+					{
+						Attribute++;
+
+						if (Attribute == 1)
+						{
+							UserLoaded.set_UserId(MyAttribute);
+						}
+						if (Attribute == 2)
+						{
+							UserLoaded.set_Name(MyAttribute);
+						}
+						if (Attribute == 3)
+						{
+							UserLoaded.set_FatherName(MyAttribute);
+						}
+						if (Attribute == 4)
+						{
+							UserLoaded.set_UserName(MyAttribute);
+						}
+						if (Attribute == 5)
+						{
+							UserLoaded.set_Password(MyAttribute);
+						}
+						if (Attribute == 6)
+						{
+							UserLoaded.set_Email(MyAttribute);
+						}
+						MyAttribute.clear();
+						index = 0;
+
+					}
+
+					if (Data[i] == '$')///object completed
+					{
+						MyAttribute.clear();
+						index = 0;
+						//compare with Parameter
+						if (UserLoaded.get_UserId() == ToFindParmaterUserId)
+						{
+							is_found = true;
+							UserLoaded.Display();
+						}
+						Data.clear();
+						Attribute = 0;
+					}
+				}
+			}
+			if (!is_found)
+			{
+				cout << "NO RECORD FOUND" << endl;
+			}
+		}
+	}
+	void DeleteUserAccount(string ToFindParmaterUserId)
+	{
+		bool is_found = false;
+		ifstream reader("Data\\users.dat");
+		if (reader.is_open())
+		{
+			string Data, MyAttribute;
+			int Attribute = 0, index = 0;
+			while (getline(reader, Data))
+			{
+				User UserLoaded;
+				int datalength = Data.length();
+				for (int i = 0; i < datalength; i++)
+				{
+					if (Data[i] != ',')
+					{
+						MyAttribute.insert(index, 1, Data[i]);
+						index++;
+					}
+					else
+					{
+						Attribute++;
+
+						if (Attribute == 1)
+						{
+							UserLoaded.set_UserId(MyAttribute);
+						}
+						if (Attribute == 2)
+						{
+							UserLoaded.set_Name(MyAttribute);
+						}
+						if (Attribute == 3)
+						{
+							UserLoaded.set_FatherName(MyAttribute);
+						}
+						if (Attribute == 4)
+						{
+							UserLoaded.set_UserName(MyAttribute);
+						}
+						if (Attribute == 5)
+						{
+							UserLoaded.set_Password(MyAttribute);
+						}
+						if (Attribute == 6)
+						{
+							UserLoaded.set_Email(MyAttribute);
+						}
+						MyAttribute.clear();
+						index = 0;
+
+					}
+					if (Data[i] == '$')///object completed
+					{
+						MyAttribute.clear();
+						index = 0;
+						//<After finding specific User to delete>
+						//<we create a new file temp.bin in which we transfer all record (except which is requested to delete) and then rename this file to account.dat>
+
+						if (UserLoaded.get_UserId() == ToFindParmaterUserId)
+						{
+							is_found = true;
+						}
+						if (!is_found)
+						{
+							SaveToFile("Data\\temp.dat", UserLoaded.ModelToString());
+						}
+						Data.clear();
+						Attribute = 0;
+					}
+				}
+			}
+			if (!is_found)
+			{
+				cout << "NO RECORD FOUND" << endl;
+			}
+			else
+			{
+				cout << "DELETED SUCESSFULLY" << endl;
+			}
+			reader.close();
+
+			auto isRemoved = remove("Data\\users.dat"); //file containing old record
+			auto isRenamed = rename("Data\\temp.dat", "Data\\users.dat"); //file containing new record
+		}
+	}
+	void UpdateBankAccount(string ToFindParameterUserId, User UpdatedRecord)
+	{
+		bool is_found = false;
+		ifstream reader("Data\\users.dat");
+		if (reader.is_open())
+		{
+			string Data, MyAttribute;
+			int Attribute = 0, index = 0;
+			while (getline(reader, Data))//read a line 
+			{
+				User UserLoaded;
+				int datalength = Data.length();
+				for (int i = 0; i < datalength; i++)
+				{
+					if (Data[i] != ',')
+					{
+						MyAttribute.insert(index, 1, Data[i]);
+						index++;
+
+					}
+					else
+					{
+						Attribute++;
+
+						if (Attribute == 1)
+						{
+							UserLoaded.set_UserId(MyAttribute);
+						}
+						if (Attribute == 2)
+						{
+							UserLoaded.set_Name(MyAttribute);
+						}
+						if (Attribute == 3)
+						{
+							UserLoaded.set_FatherName(MyAttribute);
+						}
+						if (Attribute == 4)
+						{
+							UserLoaded.set_UserName(MyAttribute);
+						}
+						if (Attribute == 5)
+						{
+							UserLoaded.set_Password(MyAttribute);
+						}
+						if (Attribute == 6)
+						{
+							UserLoaded.set_Email(MyAttribute);
+						}
+						MyAttribute.clear();
+						index = 0;
+
+					}
+
+					if (Data[i] == '$')///object completed
+					{
+						MyAttribute.clear();
+						index = 0;
+						//<After finding specific user to delete>
+						//<we create a new file temp.dat in which we transfer all record and then rename this file to account.dat>
+
+						if (UserLoaded.get_UserId() == ToFindParameterUserId)
+						{
+							is_found = true;
+							UserLoaded = UpdatedRecord;
+						}
+						SaveToFile("Data\\temp.dat", UserLoaded.ModelToString());
+						Data.clear();
+						Attribute = 0;
+					}
+				}
+			}
+			if (!is_found)
+			{
+				cout << "NO RECORD FOUND" << endl;
+			}
+			else
+			{
+				cout << "DELETED SUCESSFULLY" << endl;
+			}
+			reader.close();
+			auto IsRemoved = remove("Data\\users.dat"); //file containing old record
+			auto IsRenamed = rename("Data\\temp.dat", "Data\\users.dat"); //file containing new record
+		}
+	}
+	bool PerformLogin(string username,string password)
+	{
+		bool is_found = false;
+		ifstream reader;
+		reader.open("Data\\users.dat");
+		if (reader.is_open())
+		{
+			string Data, MyAttribute;
+			int Attribute = 0, index = 0;
+			while (getline(reader, Data))
+			{
+				User UserLoaded;
+				int datalength = Data.length();
+				for (int i = 0; i < datalength; i++)
+				{
+					if (Data[i] != ',')
+					{
+						MyAttribute.insert(index, 1, Data[i]);
+						index++;
+
+					}
+					else
+					{
+						Attribute++;
+
+						if (Attribute == 1)
+						{
+							UserLoaded.set_UserId(MyAttribute);
+						}
+						if (Attribute == 2)
+						{
+							UserLoaded.set_Name(MyAttribute);
+						}
+						if (Attribute == 3)
+						{
+							UserLoaded.set_FatherName(MyAttribute);
+						}
+						if (Attribute == 4)
+						{
+							UserLoaded.set_UserName(MyAttribute);
+						}
+						if (Attribute == 5)
+						{
+							UserLoaded.set_Password(MyAttribute);
+						}
+						if (Attribute == 6)
+						{
+							UserLoaded.set_Email(MyAttribute);
+						}
+						MyAttribute.clear();
+						index = 0;
+
+					}
+
+					if (Data[i] == '$')///object completed
+					{
+						MyAttribute.clear();
+						index = 0;
+						//compare with Parameters
+						if (UserLoaded.get_UserName() == username&& UserLoaded.get_Password() == password)
+						{
+							is_found = true;
+							return true;//when login sucessFully
+						}
+						Data.clear();
+						Attribute = 0;
+					}
+				}
+			}
+			if (!is_found)
+			{
+				cout << "NO RECORD FOUND" << endl;
+				return false;
+			}
+		}
+		else 
+		{
+			return false;
+		}
+	}
+	void DeactivateUserAccount(string ToFindParameterUserId)
+	{
+		bool is_found = false;
+		ifstream reader("Data\\users.dat");
+		if (reader.is_open())
+		{
+			string Data, MyAttribute;
+			int Attribute = 0, index = 0;
+			while (getline(reader, Data))//read a line 
+			{
+				User UserLoaded;
+				int datalength = Data.length();
+				for (int i = 0; i < datalength; i++)
+				{
+					if (Data[i] != ',')
+					{
+						MyAttribute.insert(index, 1, Data[i]);
+						index++;
+
+					}
+					else
+					{
+						Attribute++;
+
+						if (Attribute == 1)
+						{
+							UserLoaded.set_UserId(MyAttribute);
+						}
+						if (Attribute == 2)
+						{
+							UserLoaded.set_Name(MyAttribute);
+						}
+						if (Attribute == 3)
+						{
+							UserLoaded.set_FatherName(MyAttribute);
+						}
+						if (Attribute == 4)
+						{
+							UserLoaded.set_UserName(MyAttribute);
+						}
+						if (Attribute == 5)
+						{
+							UserLoaded.set_Password(MyAttribute);
+						}
+						if (Attribute == 6)
+						{
+							UserLoaded.set_Email(MyAttribute);
+						}
+						MyAttribute.clear();
+						index = 0;
+
+					}
+
+					if (Data[i] == '$')///object completed
+					{
+						MyAttribute.clear();
+						index = 0;
+						//<After finding specific user to delete>
+						//<we create a new file temp.dat in which we transfer all record and then rename this file to account.dat>
+
+						if (UserLoaded.get_UserId() == ToFindParameterUserId)
+						{
+							is_found = true;
+							UserLoaded.set_IsActive("Deactive");					
+						}
+						SaveToFile("Data\\temp.dat", UserLoaded.ModelToString());
+						Data.clear();
+						Attribute = 0;
+					}
+				}
+			}
+			if (!is_found)
+			{
+				cout << "NO RECORD FOUND" << endl;
+			}
+			else
+			{
+				cout << "DELETED SUCESSFULLY" << endl;
+			}
+			reader.close();
+			auto IsRemoved = remove("Data\\users.dat"); //file containing old record
+			auto IsRenamed = rename("Data\\temp.dat", "Data\\users.dat"); //file containing new record
+		}
+	}
+	void ReactivateUserAccount(string ToFindParameterUserId)
+	{
+		bool is_found = false;
+		ifstream reader("Data\\users.dat");
+		if (reader.is_open())
+		{
+			string Data, MyAttribute;
+			int Attribute = 0, index = 0;
+			while (getline(reader, Data))//read a line 
+			{
+				User UserLoaded;
+				int datalength = Data.length();
+				for (int i = 0; i < datalength; i++)
+				{
+					if (Data[i] != ',')
+					{
+						MyAttribute.insert(index, 1, Data[i]);
+						index++;
+
+					}
+					else
+					{
+						Attribute++;
+
+						if (Attribute == 1)
+						{
+							UserLoaded.set_UserId(MyAttribute);
+						}
+						if (Attribute == 2)
+						{
+							UserLoaded.set_Name(MyAttribute);
+						}
+						if (Attribute == 3)
+						{
+							UserLoaded.set_FatherName(MyAttribute);
+						}
+						if (Attribute == 4)
+						{
+							UserLoaded.set_UserName(MyAttribute);
+						}
+						if (Attribute == 5)
+						{
+							UserLoaded.set_Password(MyAttribute);
+						}
+						if (Attribute == 6)
+						{
+							UserLoaded.set_Email(MyAttribute);
+						}
+						MyAttribute.clear();
+						index = 0;
+
+					}
+
+					if (Data[i] == '$')///object completed
+					{
+						MyAttribute.clear();
+						index = 0;
+						//<After finding specific user to delete>
+						//<we create a new file temp.dat in which we transfer all record and then rename this file to account.dat>
+
+						if (UserLoaded.get_UserId() == ToFindParameterUserId)
+						{
+							is_found = true;
+							UserLoaded.set_IsActive("active");
+						}
+						SaveToFile("Data\\temp.dat", UserLoaded.ModelToString());
+						Data.clear();
+						Attribute = 0;
+					}
+				}
+			}
+			if (!is_found)
+			{
+				cout << "NO RECORD FOUND" << endl;
+			}
+			else
+			{
+				cout << "DELETED SUCESSFULLY" << endl;
+			}
+			reader.close();
+			auto IsRemoved = remove("Data\\users.dat"); //file containing old record
+			auto IsRenamed = rename("Data\\temp.dat", "Data\\users.dat"); //file containing new record
+		}
 	}
 	User()
 	{
 		UserName = Password = Email = "";
 	}
-
 };

@@ -19,7 +19,7 @@ void RegisterNewBankAccount()
 	acount.set_BusinessName(AskAndGetInput<string>("Enter Your Bussiness Name"));
 	acount.set_MonthlyIncome(AskAndGetInput<double>("Enter Your Monthly Income"));
 	acount.set_yearlyIncome(AskAndGetInput<double>("Enter Your Yearly Income"));
-	acount.set_Status("A");
+	acount.set_Status("Active");
 	acount.CreateNewBankAccount();
 	//intial transaction
 	cout << "\n" << endl;
@@ -72,7 +72,7 @@ void UpdateBankAccount()
 	UpdatedRecord.set_BusinessName(AskAndGetInput<string>("Enter Your Bussiness Name"));
 	UpdatedRecord.set_MonthlyIncome(AskAndGetInput<double>("Enter Your Monthly Income"));
 	UpdatedRecord.set_yearlyIncome(AskAndGetInput<double>("Enter Your Yearly Income"));
-	UpdatedRecord.set_Status("A");
+	UpdatedRecord.set_Status("Active");
 
 	Accounts acnt;
 	acnt.UpdateBankAccount(ToFind, UpdatedRecord);
@@ -111,17 +111,24 @@ void DepositTransactionAmount()
 	string accountNumber = AskAndGetInput<string>("Enter Account Number To Deposit");
 	Transactions checkBalance;
 	auto currentbalace = checkBalance.CheckCurrentBalance(accountNumber);
+	if (currentbalace!=0)
+	{
+		Transactions trans;
+		trans.set_AccountNumber(accountNumber);
+		trans.set_TransactionId(AskAndGetInput<string>("Enter Transaction Id"));
+		trans.set_TransactionType(TransactionType::Deposit);
+		trans.set_Amount(AskAndGetInput<double>("Enter Transaction Amount"));
+		double newbalance = currentbalace + (trans.get_Amount());
+		trans.set_Balance(newbalance);
+		cin.ignore();
+		trans.set_TransactionDate(AskAndGetInput<string>("Enter Transaction Date"));
+		trans.CreateNewTransction();
+	}
+	else 
+	{
+		cout << "Invalid Accout Number" << endl;
+	}
 	
-	Transactions trans;
-	trans.set_AccountNumber(accountNumber);
-	trans.set_TransactionId(AskAndGetInput<string>("Enter Transaction Id"));
-	trans.set_TransactionType(TransactionType::Deposit);
-	trans.set_Amount(AskAndGetInput<double>("Enter Transaction Amount"));
-	double newbalance = currentbalace + (trans.get_Amount());
-	trans.set_Balance(newbalance);
-	cin.ignore();
-	trans.set_TransactionDate(AskAndGetInput<string>("Enter Transaction Date"));
-	trans.CreateNewTransction();
 }
 void TransactionHistory() 
 {
@@ -129,6 +136,29 @@ void TransactionHistory()
 	string accountNumber = AskAndGetInput<string>("Enter Account Number To Deposit");
 	Transactions tr;
 	tr.FindTransactionHistoryByAccountNumber(accountNumber);
+}
+//-----------------------------
+//USER MODULE
+//-----------------------------
+void RegisterUserAccount() 
+{
+
+}
+void DeleteUserAccount()
+{
+
+}
+void FindUserAccount()
+{
+
+}
+void UpdateUserAccount()
+{
+
+}
+void DeactivateUserAccount()
+{
+
 }
 //-----------------------------
 //CODE DRIVER
@@ -213,14 +243,50 @@ void StartMyApp()
 			}
 			case 3:
 			{
-				break;
-			}
-			case 4:
+				do
+			    {
+					switch (ShowUserManagementMenu())
+					{
+						case 1:
+						{
+							RegisterUserAccount();
+							break;
+						}
+						case 2:
+						{
+							DeleteUserAccount();
+							break;
+						}
+						case 3:
+						{
+							DeactivateUserAccount();
+							break;
+						}
+						case 4:
+						{
+							UpdateUserAccount();
+							break;
+						}
+						case 5:
+						{
+							FindUserAccount();
+							break;
+						}
+						default:
+							throw runtime_error("ERROR PLEASE SELECT FROM ABOVE LIST");
+							StartUp();
+							break;
+					}
+				  SelectedCommand = AskToGoBack();
+			    }
+		    while (!SelectedCommand);
 			{
-				break;
-			}
-			default:
 				StartUp();
+			}
+				break;
+			}			
+			default:
+				throw runtime_error("Invalid Choice");				
 				break;
 		}
 		if (AskToExitApplication())
@@ -235,7 +301,7 @@ void StartMyApp()
 	}
 }
 //-----------------------------
-//EXCEPTION REGISTRATION
+//EXCEPTION HANDLER REGISTRATION
 //-----------------------------
 void StartUp() 
 {
