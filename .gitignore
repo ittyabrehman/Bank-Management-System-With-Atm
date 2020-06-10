@@ -340,3 +340,7 @@ ASALocalRun/
 healthchecksdb
 *.dat
 BMS/Logs/log.txt
+BMS/Logs/log.txt
+BMS.ATM/Logs/log.txt
+BMS/Logs/log.txt
+BMS/Logs/log.txt

@@ -24,6 +24,7 @@ int ShowWithDrawModuleMenu()
 	cout << "3.WITH-DRAW 25,000" << endl;
 	cout << "4.WITH-DRAW 50,000" << endl;
 	cout << "5.WITH-DRAW 75,000" << endl;	
+	cout << "6.USER DEFINED AMOUNT TO WITHDRAW" << endl;	
 	CreateLog(ELogType::SuccessFul, "WITH-DRAW MODULE MENU LOADED COMPLETELY");
 	int key; cin >> key;
 	return key;

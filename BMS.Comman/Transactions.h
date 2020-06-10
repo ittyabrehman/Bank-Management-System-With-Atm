@@ -100,7 +100,7 @@ public:
 			to_string(get_Amount()) + "," + to_string(get_Balance()) + "," +
 			get_TransactionDate() + ",";
 
-		CreateLog(ELogType::Failed, "TRANSACTION MODEL TO STRING IS REQUESTED & CREATED SUCESSFULLY");
+		CreateLog(ELogType::SuccessFul, "TRANSACTION MODEL TO STRING IS REQUESTED & CREATED SUCESSFULLY");
 		return ModelString;
 	}
 	void DisplayAllAccountTransaction()
