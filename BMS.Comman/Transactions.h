@@ -75,7 +75,7 @@ public:
 		cout << setw(ColWidth) << get_AccountNumber() << setw(15) << type <<
 			setw(20) << to_string(get_Amount()) << setw(20) << to_string(get_Balance()) << setw(20) << get_TransactionDate() << endl;
 		cout << "\n\n";
-		CreateLog(ELogType::SuccessFul, "TRANSACTIONS HISTROY DISPLAYED");
+		CreateLog(ELogType::SuccessFul, get_AccountNumber()+"TRANSACTIONS HISTROY DISPLAYED");
 	}
 	string ModelToString()
 	{
@@ -100,7 +100,7 @@ public:
 			to_string(get_Amount()) + "," + to_string(get_Balance()) + "," +
 			get_TransactionDate() + ",";
 
-		CreateLog(ELogType::SuccessFul, "TRANSACTION MODEL TO STRING IS REQUESTED & CREATED SUCESSFULLY");
+		CreateLog(ELogType::SuccessFul, get_AccountNumber()+" TRANSACTION MODEL TO STRING IS REQUESTED & CREATED SUCESSFULLY");
 		return ModelString;
 	}
 	void DisplayAllAccountTransaction()
@@ -269,18 +269,22 @@ public:
 						{
 							is_found = true;
 							TransactionLoaded.Display();
+							break;
 							CreateLog(ELogType::SuccessFul, ToFindParameter + " IS REQUESTED TO FIND (FOUND)");
 						}
 						Data.clear();
 						Attribute = 0;
 					}
 				}
+				
+				
 			}
 			if (!is_found)
 			{
 				cout << "NO RECORD FOUND" << endl;
 				CreateLog(ELogType::SuccessFul, ToFindParameter + "IS REQUESTED TO FIND (NOT FOUND)");
 			}
+			reader.close();			
 		}
 		else
 		{
@@ -577,6 +581,7 @@ public:
 				CreateLog(ELogType::Warning, ToFindParamerAccountNumber + " IS REQUESTED TO CHECK CURRENT BALANCE (NOT FOUND)");
 
 			}
+			reader.close();
 		}
 		else
 		{

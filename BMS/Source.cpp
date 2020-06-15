@@ -433,7 +433,7 @@ void StartUp()
 int main()
 {
 	CreateLog(ELogType::SuccessFul,"======Application Started======");
-	if (PerformLogin()) 
+	//if (PerformLogin()) 
 	{
 		StartUp();
 	}	

@@ -7,9 +7,9 @@ string AccountNumber;
 void ShowTransactionHistoryModule()
 {
 	cin.ignore();
-	const string accountNumber = AskAndGetInput<string>("Enter Account Number To Deposit");
+	//const string accountNumber = AskAndGetInput<string>("Enter Account Number To Deposit");
 	Transactions tr;
-	tr.FindTransactionHistoryByAccountNumber(accountNumber);
+	tr.FindTransactionHistoryByAccountNumber(AccountNumber);
 }
 void ShowWithDrawModule() 
 {
@@ -98,8 +98,11 @@ bool PerformLogin()
 		debitCardPin = AskAndGetInput<string>("Re-Enter Debit Card Pin");
 		response = account.PerformATMLogin(accountNo, debitCardPin);
 	}
-	if (response)
+	if (response) 
+	{
+		AccountNumber = accountNo;
 		return true;
+	}
 	else
 		return false;
 }
@@ -116,16 +119,19 @@ void StartMyApp()
 			case 1: 
 			{
 				ShowWithDrawModule();
+				SelectedCommand = AskToGoBack();
 				break;
 			}
 			case 2:
 			{
 				ShowTransactionHistoryModule();
+				SelectedCommand = AskToGoBack();
 				break;
 			}
 			case 3:
 			{
 				ChangeDebitCardPinModule();
+				SelectedCommand = AskToGoBack();
 				break;
 			}
 			case 4:
