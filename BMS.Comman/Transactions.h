@@ -75,7 +75,7 @@ public:
 		cout << setw(ColWidth) << get_AccountNumber() << setw(15) << type <<
 			setw(20) << to_string(get_Amount()) << setw(20) << to_string(get_Balance()) << setw(20) << get_TransactionDate() << endl;
 		cout << "\n\n";
-		CreateLog(ELogType::SuccessFul, get_AccountNumber()+"TRANSACTIONS HISTROY DISPLAYED");
+		CreateLog(ELogType::SuccessFul, get_AccountNumber()+" TRANSACTIONS HISTROY DISPLAYED");
 	}
 	string ModelToString()
 	{

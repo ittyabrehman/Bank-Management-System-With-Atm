@@ -60,7 +60,7 @@ void ShowWithDrawModule()
 		trans.set_AccountNumber(AccountNumber);
 		trans.set_TransactionId(AskAndGetInput<string>("Enter Transaction Id"));
 		trans.set_ETransactionType(ETransactionType::WithDraw);
-		trans.set_Amount(AskAndGetInput<double>("Enter Transaction Amount"));
+		trans.set_Amount(amountToWithDraw);
 		const double newbalance = currentbalace - (trans.get_Amount());
 		trans.set_Balance(newbalance);
 		cin.ignore();
@@ -78,6 +78,7 @@ void ShowWithDrawModule()
 void ChangeDebitCardPinModule()
 {
 	Accounts account;
+	cin.ignore();
 	auto ToChangeAccountNoDebitPin = AskAndGetInput<string>("Enter Account Number");
 	auto NewDebitCardPin = AskAndGetInput<string>("Enter New Debit Card Pin");
 	account.ChangeAccountDebitCardPin(ToChangeAccountNoDebitPin,NewDebitCardPin);
