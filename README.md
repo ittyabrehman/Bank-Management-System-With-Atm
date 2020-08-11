@@ -6,9 +6,12 @@ Bank Management System With Basic Functionalities in c++
 2) Search Bank Account
 3) Update Bank Account
 4) Delete Bank Account
-5) Add New System User
-6) Search System User
-7) Update System User
-8) Delete System User
-9) Acitve/Delete/Suspend System User
-10) Every Function is logged in a seperate file
+5) Acitve/Delete/Suspend Bank Account
+6) Add New System User
+7) Search System User
+8) Update System User
+9) Delete System User
+10) Acitve/Delete/Suspend System User
+11) Every Function is logged in a seperate file
+12) Transaction History
+
