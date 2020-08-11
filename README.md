@@ -1,4 +1,4 @@
-# Bank-Management-System-With-Atm
+# ERP-Bank-Management-System-With-Atm
 Bank Management System With Basic Functionalities in c++
 
 # Functionalities 
